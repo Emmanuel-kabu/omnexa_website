@@ -73,6 +73,13 @@ jobs:
       - name: Interaction audit (keyboard, focus, targets, overflow, motion, scheme)
         run: node scripts/interaction-audit.mjs
 
+      # Asserts the Stage 7 §60 header set is on the wire and that the policy in
+      # next.config.ts refuses nothing the site actually needs. Runs against the
+      # enforcing policy, so a directive that breaks a page fails the build
+      # rather than being discovered in production.
+      - name: Security headers and CSP audit
+        run: node scripts/csp-audit.mjs
+
       # Reported, not gated: measured scores varied 74-87 run to run on an
       # unloaded machine, so a hard threshold would be flaky rather than
       # informative. Revisit once there is a stable baseline.

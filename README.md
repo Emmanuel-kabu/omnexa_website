@@ -29,6 +29,7 @@ works offline or behind a restrictive proxy.
 npm run verify              # everything CI runs, in order
 npm run audit:a11y          # axe-core, WCAG 2.2 AA, 12 pages
 npm run audit:interaction   # keyboard, focus, touch targets, overflow, motion, scheme
+npm run audit:csp           # security headers on the wire + real CSP violations
 ```
 
 `verify` runs typecheck → lint → production build → accessibility → interaction,
@@ -66,6 +67,43 @@ semantic tokens, which is what lets a region opt into a dark tone with
 `data-tone="dark"` and what makes the OS colour-scheme support work without
 touching a component.
 
+## Security headers
+
+Defined in `omnexa-web/next.config.ts` and versioned with the code that depends
+on them, rather than configured at the host. `npm run audit:csp` asserts they are
+actually on the wire and drives a real browser to find what the policy refuses.
+
+The policy was derived from an inventory of the built output, not copied: there is
+**no third-party origin anywhere in the site**, fonts included, which is what lets
+`default-src 'self'` be a real floor. `frame-ancestors`, `frame-src`,
+`worker-src`, `object-src` and `media-src` are all `'none'`; `base-uri` and
+`form-action` are `'self'`. Alongside CSP: HSTS (2 years, preload-eligible),
+`nosniff`, `strict-origin-when-cross-origin`, COOP/CORP, `X-Frame-Options: DENY`
+for pre-`frame-ancestors` clients, and `poweredByHeader: false`.
+
+Two directives are deliberately open, and the reasoning is worth reading before
+changing either:
+
+- **`script-src 'unsafe-inline'`** is required, not convenient. Next streams the
+  RSC payload as inline `self.__next_f.push(...)` blocks that differ per page and
+  per build, so hashes are unmaintainable. Building without it makes
+  `script-src-elem` block inline script on **17 of 17 audited pages**, i.e. the
+  site does not hydrate. The alternative is a per-request nonce from middleware,
+  which forces every route to render dynamically and would regress LCP, already
+  the weakest metric. **This is the one directive where real hardening remains
+  available**, at that cost.
+- **`style-src-attr 'unsafe-inline'`** exists because `app/global-error.tsx`
+  replaces the whole document when the root layout has failed and so cannot
+  depend on a stylesheet having loaded. Note that `style-src-elem` stays at
+  `'self'`, so injected `<style>`/`<link>` elements are still refused. Closing
+  the attribute case would add little while inline script is permitted: injecting
+  a style attribute requires HTML injection, and an attacker with that could
+  inject a `<script>` instead.
+
+`CSP_MODE=report` switches to `Content-Security-Policy-Report-Only`. It is a
+**build-time** variable, since Next compiles `headers()` into
+`.next/routes-manifest.json`; setting it on `next start` has no effect.
+
 ## Content integrity
 
 Entities marked `sample: true` are structurally complete but **not factual**.
@@ -77,6 +115,7 @@ where a value does not exist the interface says so instead of filling the gap.
 
 - Content is largely sample. Real research records are the highest-value change.
 - `/privacy` and `/terms` describe actual current behaviour but need legal review.
-- No CSP or security headers yet.
+- CSP still permits inline script; see **Security headers** for why and the cost
+  of closing it.
 - The dedicated per-system routes (Stage 5 §62) are not built; one template
   currently serves all three systems from the shared backbone.

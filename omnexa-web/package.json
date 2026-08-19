@@ -12,6 +12,7 @@
     "lint": "eslint",
     "audit:a11y": "node scripts/a11y-audit.mjs",
     "audit:interaction": "node scripts/interaction-audit.mjs",
+    "audit:csp": "node scripts/csp-audit.mjs",
     "verify": "node scripts/verify.mjs"
   },
   "dependencies": {
