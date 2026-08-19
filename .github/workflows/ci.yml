@@ -24,9 +24,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Pinned to the major the project is developed and verified on, so a local
+      # `npm run verify` actually predicts this job. package.json declares the
+      # supported floor (>=20.9.0, matching next@16.3.1).
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
           cache-dependency-path: omnexa-web/package-lock.json
 
@@ -44,10 +47,13 @@ jobs:
       - name: Build
         run: npx next build
 
-      # Poll with curl rather than adding a wait-on dependency.
+      # Redirect the server's output to a file rather than leaving it attached
+      # to this step's pipe, and poll with curl rather than adding a wait-on
+      # dependency. If startup fails the log is the only evidence of why, so
+      # print it here and keep it as an artifact for the audit steps below.
       - name: Start production server
         run: |
-          npx next start -p 3000 &
+          nohup npx next start -p 3000 > server.log 2>&1 &
           for i in $(seq 1 60); do
             if curl -sf -o /dev/null http://localhost:3000/; then
               echo "server ready after ${i}s"
@@ -55,10 +61,12 @@ jobs:
             fi
             sleep 1
           done
-          echo "server failed to start"
+          echo "::error::server failed to start within 60s"
+          cat server.log
           exit 1
 
-      # ubuntu-latest ships Chrome; scripts/audit-env.mjs discovers it.
+      # ubuntu-latest ships Chrome at /usr/bin/google-chrome; scripts/audit-env.mjs
+      # discovers it and launches with --no-sandbox --disable-dev-shm-usage.
       - name: Accessibility audit (axe, WCAG 2.2 AA)
         run: node scripts/a11y-audit.mjs
 
@@ -77,10 +85,14 @@ jobs:
             --chrome-flags="--headless --no-sandbox --disable-gpu" --quiet
           node -e "const r=require('./lh.json');for(const v of Object.values(r.categories))console.log(v.title.padEnd(16),Math.round(v.score*100));"
 
-      - name: Upload Lighthouse report
+      # Uploaded on success and failure alike: when an audit fails on the runner
+      # these two files are the only way to diagnose it from outside.
+      - name: Upload reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: lighthouse-report
-          path: omnexa-web/lh.json
+          name: ci-reports
+          path: |
+            omnexa-web/lh.json
+            omnexa-web/server.log
           if-no-files-found: ignore

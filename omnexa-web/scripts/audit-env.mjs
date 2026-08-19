@@ -14,8 +14,12 @@ export const BASE = process.env.AUDIT_BASE ?? "http://localhost:3000";
 const CANDIDATES = [
   process.env.CHROME_PATH,
   process.env.PUPPETEER_EXECUTABLE_PATH,
-  // CI (ubuntu-latest ships Chrome)
+  process.env.CHROME_BIN,
+  // CI. The ubuntu-24.04 runner image ships Google Chrome 151 and Chromium 151
+  // but sets no CHROME_BIN, so resolution rests on the packaged symlink. The
+  // /opt path is the symlink target, kept as a fallback in case it is missing.
   "/usr/bin/google-chrome",
+  "/opt/google/chrome/google-chrome",
   "/usr/bin/chromium-browser",
   "/usr/bin/chromium",
   // macOS

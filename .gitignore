@@ -7,6 +7,7 @@ coverage/
 
 # Audit artefacts produced by scripts/ and CI
 lh.json
+server.log
 *.tsbuildinfo
 
 # Environment. Nothing here is committed; see omnexa-web/src/lib/site.ts for the
