@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import { ContinueBlock } from "@/components/navigation/continue-block";
 import { EmptyState, EntityList, EntityRow } from "@/components/discovery/entity-row";
@@ -7,6 +8,8 @@ import { Section } from "@/components/layout/section";
 import { TechnicalLabel } from "@/components/typography/technical-label";
 import { peopleRepository, publicationRepository } from "@/content/repositories";
 import { formatDateTechnical } from "@/lib/format";
+
+import { contentConfig } from "@/lib/content-config";
 
 import styles from "./publications.module.css";
 
@@ -31,6 +34,14 @@ const TYPE_LABELS: Record<string, string> = {
  * Grouped by year, editorial rows rather than a card grid.
  */
 export default async function PublicationsPage() {
+  /*
+   * Withheld until there is real research output to publish. A 404 is the
+   * honest answer: an empty index would imply the lab has produced nothing,
+   * and would still be indexable. Restored by
+   * NEXT_PUBLIC_PUBLISH_RESEARCH_OUTPUTS=true.
+   */
+  if (!contentConfig.publishResearchOutputs) notFound();
+
   const publications = await publicationRepository.getAll();
 
   // Author names are resolved up front rather than inside the render map: an

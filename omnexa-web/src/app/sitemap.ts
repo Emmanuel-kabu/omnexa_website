@@ -52,13 +52,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: url("/research"), priority: 0.9 },
     { url: url("/engineering"), priority: 0.9 },
     { url: url("/research/areas"), priority: 0.8 },
-    { url: url("/research/programs"), priority: 0.7 },
-    { url: url("/research/projects"), priority: 0.7 },
-    { url: url("/research/experiments"), priority: 0.7 },
-    { url: url("/research/publications"), priority: 0.8 },
-    { url: url("/research/archive"), priority: 0.6 },
+    /*
+     * The research output indexes, the archive built from them and the research
+     * note category are all listed only while outputs are published. These
+     * routes 404 otherwise, and advertising a 404 in the sitemap invites the
+     * crawl error it should prevent. Areas stay listed, being real content.
+     */
+    ...(contentConfig.publishResearchOutputs
+      ? [
+          { url: url("/research/programs"), priority: 0.7 },
+          { url: url("/research/projects"), priority: 0.7 },
+          { url: url("/research/experiments"), priority: 0.7 },
+          { url: url("/research/publications"), priority: 0.8 },
+          { url: url("/research/archive"), priority: 0.6 },
+        ]
+      : []),
     { url: url("/insights"), priority: 0.8 },
-    { url: url("/insights/research-notes"), priority: 0.6 },
+    ...(contentConfig.publishResearchOutputs
+      ? [{ url: url("/insights/research-notes"), priority: 0.6 }]
+      : []),
     { url: url("/insights/engineering"), priority: 0.6 },
     { url: url("/insights/perspectives"), priority: 0.6 },
     { url: url("/insights/news"), priority: 0.6 },

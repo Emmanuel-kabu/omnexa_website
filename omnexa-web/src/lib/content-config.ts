@@ -37,7 +37,59 @@ export const contentConfig = {
    * real 404 rather than an empty page.
    */
   publishSystems: process.env.NEXT_PUBLIC_PUBLISH_SYSTEMS === "true",
+
+  /**
+   * Whether research *outputs* are shown: programs, projects, experiments,
+   * publications, and the research-note insight category.
+   *
+   * The research itself is under way and results are not expected soon, so
+   * there is nothing truthful to publish here yet. Every record currently in
+   * `content/data/research.ts` is marked `sample: true`, meaning a visitor
+   * would otherwise read invented findings, methods and publication records as
+   * claims this lab is making.
+   *
+   * Note what this does NOT withhold: the four research areas in
+   * `content/data/research-areas.ts` are real and stay published, as does the
+   * operating model. That distinction is the point. A lab that states what it
+   * is investigating but has not yet published results is being accurate; one
+   * that lists fabricated publications is not. The research half of the
+   * mission rests on direction, not on output that does not exist.
+   *
+   * Publishing is one value change:
+   *
+   *     NEXT_PUBLIC_PUBLISH_RESEARCH_OUTPUTS=true
+   *
+   * With it OFF these disappear from navigation, the homepage, the sitemap,
+   * search and every related-content list; the routes return a real 404; and
+   * two dependent surfaces stand down with them, because both become
+   * meaningless without outputs: `/research/archive`, whose entries are drawn
+   * exclusively from these four types, and the research atlas, which
+   * visualises the area-to-programme-to-publication graph and would otherwise
+   * render four childless nodes.
+   */
+  publishResearchOutputs:
+    process.env.NEXT_PUBLIC_PUBLISH_RESEARCH_OUTPUTS === "true",
 } as const;
+
+/**
+ * Insight categories withheld while research outputs are unpublished.
+ *
+ * A research note reports an observation from work in progress, so it is a
+ * research output wearing editorial clothes and belongs behind the same gate.
+ * Engineering notes, perspectives and news make no claim about research
+ * results, so they stay published.
+ *
+ * Typed as a plain string rather than `Insight["type"]` on purpose: this module
+ * is imported by client components (the navigation and the Insights category
+ * tabs both need it), and the content layer that owns that union is
+ * `server-only`.
+ */
+const RESEARCH_OUTPUT_INSIGHT_TYPES = new Set(["research-note"]);
+
+export function isPublishedInsightType(type: string): boolean {
+  if (!RESEARCH_OUTPUT_INSIGHT_TYPES.has(type)) return true;
+  return contentConfig.publishResearchOutputs;
+}
 
 /**
  * Whether sample entities should be visibly marked in the UI.

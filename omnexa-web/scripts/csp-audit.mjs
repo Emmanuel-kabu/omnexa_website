@@ -15,23 +15,33 @@
 import puppeteer from "puppeteer-core";
 import { BASE, LAUNCH, resolveChrome } from "./audit-env.mjs";
 
-/** Representative of every distinct rendering path in the site. */
+/**
+ * Representative of every distinct rendering path that currently resolves.
+ *
+ * Routes withheld by a content flag return 404, and a 404 page renders almost
+ * nothing: it exercises neither the inline flight payload at full size nor the
+ * stylesheet and font loads that the policy actually governs. Listing one
+ * therefore weakens the audit while appearing to broaden it.
+ *
+ * The single deliberate 404 at the end stays, because the header set must be
+ * present on error responses too, and that is worth asserting explicitly.
+ */
 const PAGES = [
   "/",
   "/research",
   "/research/areas",
-  "/research/archive",
+  "/research/areas/developmental-intelligence",
   "/engineering",
-  "/systems",
   "/insights",
+  "/insights/engineering",
   "/company",
   "/company/people",
+  "/company/people/sample-researcher",
   "/company/contact",
+  "/company/mission",
   "/careers",
   "/careers/culture",
-  "/careers/open-roles",
-  "/search?q=OMX-DI-007",
-  "/research/programs/lifelong-model-learning",
+  "/search?q=intelligence",
   "/insights/designing-specialized-software-engineering-agents",
   "/this-route-does-not-exist",
 ];

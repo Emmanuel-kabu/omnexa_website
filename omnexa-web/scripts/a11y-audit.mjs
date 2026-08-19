@@ -4,12 +4,25 @@ import { BASE, LAUNCH, resolveChrome } from "./audit-env.mjs";
 const require = createRequire(import.meta.url);
 const axePath = require.resolve("axe-core/axe.min.js");
 
+/**
+ * One page per distinct template, all of which must currently resolve.
+ *
+ * Content flags withhold routes, and a withheld route returns 404. Auditing one
+ * scores the 404 page instead: it passes, coverage silently drops, and the
+ * report still claims twelve pages. That happened when research output was
+ * withheld and this list still named /research/archive and a programme detail
+ * page, which is why the status assertion below exists.
+ *
+ * The search query must match published content too, so the populated results
+ * template is exercised rather than the empty state.
+ */
 const PAGES = [
-  "/", "/research", "/research/areas", "/engineering", "/research/archive",
-  "/company", "/company/people", "/insights", "/careers",
-  "/research/programs/lifelong-model-learning",
+  "/", "/research", "/research/areas", "/engineering",
+  "/research/areas/developmental-intelligence",
+  "/company", "/company/people", "/company/people/sample-researcher",
+  "/insights", "/careers",
   "/insights/designing-specialized-software-engineering-agents",
-  "/search?q=OMX-DI-007",
+  "/search?q=intelligence",
 ];
 const TAGS = ["wcag2a","wcag2aa","wcag21a","wcag21aa","wcag22aa"];
 
@@ -25,7 +38,21 @@ for (const p of PAGES) {
   const page = await browser.newPage();
   await page.setViewport({ width: 1280, height: 900 });
   try {
-    await page.goto(BASE + p, { waitUntil: "networkidle2", timeout: 45000 });
+    const response = await page.goto(BASE + p, { waitUntil: "networkidle2", timeout: 45000 });
+
+    /*
+     * A 404 page is accessible, so auditing one yields a clean pass while
+     * testing nothing. Fail loudly instead: a listed page that stops resolving
+     * is a coverage regression, not a result.
+     */
+    const status = response?.status() ?? 0;
+    if (status !== 200) {
+      total += 1;
+      console.log(`  ${p.padEnd(58)} HTTP ${status} — not audited, listed page must resolve`);
+      await page.close();
+      continue;
+    }
+
     await page.addScriptTag({ path: axePath });
     const r = await page.evaluate(async (tags) => {
       const res = await window.axe.run(document, { runOnly: { type: "tag", values: tags } });

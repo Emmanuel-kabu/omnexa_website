@@ -86,30 +86,46 @@ export default async function HomePage() {
    * counter: mutating during render is exactly what `react-hooks/immutability`
    * exists to catch.
    */
-  const order: readonly SectionKey[] = showSystems
-    ? [
-        "definition",
-        "areas",
-        "featured",
-        "engineering",
-        "transition",
-        "systems",
-        "researchos",
-        "knowledge",
-        "insights",
-        "operatingModel",
-        "careers",
-      ]
-    : [
-        "definition",
-        "areas",
-        "featured",
-        "engineering",
-        "knowledge",
-        "insights",
-        "operatingModel",
-        "careers",
-      ];
+  const showOutputs = contentConfig.publishResearchOutputs;
+
+  /*
+   * Derived by filtering one canonical order rather than enumerating variants.
+   * With two independent flags there are four combinations, and keeping four
+   * hand-written arrays in step is precisely how a numbering gap gets shipped.
+   */
+  const SYSTEMS_SECTIONS = new Set<SectionKey>([
+    "transition",
+    "systems",
+    "researchos",
+  ]);
+
+  /*
+   * Both of these present research output and nothing else: "featured" lists
+   * programs and projects, "knowledge" lists publications and experiments. With
+   * output withheld they would render a heading over an empty state on the
+   * front page, which reads as an admission rather than a design.
+   */
+  const OUTPUT_SECTIONS = new Set<SectionKey>(["featured", "knowledge"]);
+
+  const order: readonly SectionKey[] = (
+    [
+      "definition",
+      "areas",
+      "featured",
+      "engineering",
+      "transition",
+      "systems",
+      "researchos",
+      "knowledge",
+      "insights",
+      "operatingModel",
+      "careers",
+    ] as const satisfies readonly SectionKey[]
+  ).filter((key) => {
+    if (SYSTEMS_SECTIONS.has(key)) return showSystems;
+    if (OUTPUT_SECTIONS.has(key)) return showOutputs;
+    return true;
+  });
 
   const n = (key: SectionKey): string => {
     const position = order.indexOf(key);
@@ -136,11 +152,13 @@ export default async function HomePage() {
           areas={content.researchAreas}
           index={n("areas")}
         />
-        <FeaturedResearchSection
-          items={content.featuredResearch}
-          areas={content.researchAreas}
-          index={n("featured")}
-        />
+        {showOutputs ? (
+          <FeaturedResearchSection
+            items={content.featuredResearch}
+            areas={content.researchAreas}
+            index={n("featured")}
+          />
+        ) : null}
 
         <AppliedEngineeringSection index={n("engineering")} />
 
@@ -155,7 +173,9 @@ export default async function HomePage() {
           </>
         ) : null}
 
-        <KnowledgeSection items={content.knowledge} index={n("knowledge")} />
+        {showOutputs ? (
+          <KnowledgeSection items={content.knowledge} index={n("knowledge")} />
+        ) : null}
         <InsightsSection items={content.insights} index={n("insights")} />
         <OperatingModelSection index={n("operatingModel")} />
         <CareersSection jobs={content.openRoles} index={n("careers")} />

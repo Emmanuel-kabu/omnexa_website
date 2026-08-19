@@ -17,6 +17,7 @@ import {
   publicationRepository,
   researchRepository,
 } from "@/content/repositories";
+import { contentConfig } from "@/lib/content-config";
 import { formatDateTechnical } from "@/lib/format";
 
 import styles from "./research.module.css";
@@ -45,6 +46,20 @@ export const metadata: Metadata = {
  * hardcoded "31 EXPERIMENTS" is exactly the fabrication §101 forbids.
  */
 export default async function ResearchPage() {
+  /*
+   * While research output is withheld this landing page presents the areas
+   * alone. The atlas and the output sections are not merely empty without it:
+   * the atlas visualises the area-to-programme-to-publication graph and would
+   * draw four childless nodes, and "Active programs" would announce a heading
+   * over an empty-state message. Removing them leaves one honest statement of
+   * what the lab is investigating.
+   *
+   * A side benefit: the atlas and the areas list below it were two
+   * presentations of the same four areas stacked back to back, which was a
+   * standing information-architecture defect.
+   */
+  const showOutputs = contentConfig.publishResearchOutputs;
+
   const [areas, programs, experiments, publications, atlas] = await Promise.all([
     researchRepository.getAreas(),
     researchRepository.getPrograms(),
@@ -108,17 +123,19 @@ export default async function ResearchPage() {
           Suspense is required because the atlas reads its selection from the
           URL via `useSearchParams`; with the boundary in place this route
           still prerenders statically and the params resolve on the client. */}
-      <Section tone="light" density="instrumental">
-        <Suspense
-          fallback={
-            <p className="omx-technical" style={{ color: "var(--text-muted)" }}>
-              Loading research atlas…
-            </p>
-          }
-        >
-          <ResearchAtlas data={atlas} />
-        </Suspense>
-      </Section>
+      {showOutputs ? (
+        <Section tone="light" density="instrumental">
+          <Suspense
+            fallback={
+              <p className="omx-technical" style={{ color: "var(--text-muted)" }}>
+                Loading research atlas…
+              </p>
+            }
+          >
+            <ResearchAtlas data={atlas} />
+          </Suspense>
+        </Section>
+      ) : null}
 
       {/* Areas: editorial presentation of the same hierarchy */}
       <Section id="areas" tone="subtle" density="editorial">
@@ -180,6 +197,7 @@ export default async function ResearchPage() {
       </Section>
 
       {/* Active programs: Stage 4 §27 */}
+      {showOutputs ? (
       <Section tone="light" density="editorial">
         <h2 className={`omx-heading-1 ${styles.sectionTitle}`}>
           Active programs
@@ -204,9 +222,11 @@ export default async function ResearchPage() {
           </EntityList>
         )}
       </Section>
+      ) : null}
 
       {/* Research in progress + publications */}
       <Section tone="subtle" density="editorial">
+        {showOutputs ? (
         <div className={styles.split}>
           <div>
             <h2 className={`omx-heading-3 ${styles.splitTitle}`}>
@@ -264,18 +284,28 @@ export default async function ResearchPage() {
             )}
           </div>
         </div>
+        ) : null}
 
-        {/* Every child index, not a subset: this landing is the entry point
-            for the whole research section. */}
+        {/* Every child index that currently resolves, not a subset: this
+            landing is the entry point for the whole research section. The
+            withheld indexes are omitted rather than linked to a 404. */}
         <div className={styles.actions}>
-          <TextAction href="/research/archive">View research archive</TextAction>
           <TextAction href="/research/areas">Research areas</TextAction>
-          <TextAction href="/research/programs">All programs</TextAction>
-          <TextAction href="/research/projects">All projects</TextAction>
-          <TextAction href="/research/experiments">All experiments</TextAction>
-          <TextAction href="/research/publications">
-            All publications
-          </TextAction>
+          {showOutputs ? (
+            <>
+              <TextAction href="/research/archive">
+                View research archive
+              </TextAction>
+              <TextAction href="/research/programs">All programs</TextAction>
+              <TextAction href="/research/projects">All projects</TextAction>
+              <TextAction href="/research/experiments">
+                All experiments
+              </TextAction>
+              <TextAction href="/research/publications">
+                All publications
+              </TextAction>
+            </>
+          ) : null}
         </div>
       </Section>
 

@@ -16,6 +16,7 @@ import {
 import { site } from "@/lib/site";
 
 import route from "@/styles/route.module.css";
+import { contentConfig } from "@/lib/content-config";
 
 type Params = { slug: string };
 
@@ -71,6 +72,8 @@ export default async function ResearchAreaPage({
       systemsRepository.getAll(),
     ]);
 
+  const showOutputs = contentConfig.publishResearchOutputs;
+
   const programs = allPrograms.filter((p) => p.researchAreaId === area.id);
   const projects = allProjects.filter((p) => p.researchAreaId === area.id);
   const experiments = allExperiments.filter((e) => e.researchAreaId === area.id);
@@ -125,6 +128,13 @@ export default async function ResearchAreaPage({
               </ol>
             </div>
 
+            {/* The four output blocks stand or fall together: with research
+                output withheld each one would render a heading over an
+                empty-state message, four times per area page. The area's
+                thesis, subdomains and open questions above are real content
+                and carry the page on their own. */}
+            {showOutputs ? (
+            <>
             <div className={route.block}>
               <h2 className={`omx-heading-3 ${route.blockTitle}`}>
                 Active programs
@@ -212,6 +222,8 @@ export default async function ResearchAreaPage({
                 </EntityList>
               )}
             </div>
+            </>
+            ) : null}
           </div>
 
           <aside className={route.readingAside}>

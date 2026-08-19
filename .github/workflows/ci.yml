@@ -80,6 +80,15 @@ jobs:
       - name: Security headers and CSP audit
         run: node scripts/csp-audit.mjs
 
+      # Crawls the served site and follows every internal link. Content flags
+      # withhold routes, and a withheld route 404s, so anything still linking to
+      # one is a dead end. Links are written as JSX attributes, as object
+      # properties in navigation arrays, and as template literals with query
+      # strings, and no grep pattern catches all three; crawling is
+      # shape-independent.
+      - name: Internal link integrity
+        run: node scripts/link-audit.mjs
+
       # Gated at 85, no longer advisory. The 74-87 spread that justified
       # continue-on-error was a workstation artefact: two CI runs both scored 93
       # with LCP agreeing to within 0.2% (3164.5ms vs 3163.4ms) despite the

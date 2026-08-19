@@ -30,15 +30,16 @@ npm run verify              # everything CI runs, in order
 npm run audit:a11y          # axe-core, WCAG 2.2 AA, 12 pages
 npm run audit:interaction   # keyboard, focus, touch targets, overflow, motion, scheme
 npm run audit:csp           # security headers on the wire + real CSP violations
+npm run audit:links         # crawls the served site; every internal link must resolve
 ```
 
-`verify` runs typecheck → lint → production build → accessibility → interaction,
-and exits non-zero on any failure. The audits need a production build, since
-dev-mode timings and bundles are not representative. CI runs the same pipeline
-on every pull request.
+`verify` runs seven stages in order — typecheck → lint → production build →
+accessibility → interaction → CSP → links — and exits non-zero on any failure.
+The audits need a production build, since dev-mode timings and bundles are not
+representative. CI runs the same pipeline on every pull request.
 
 Current state: **0 axe violations** across 12 pages, **23 interaction checks
-passing**, **0 CSP violations** across 17 pages, and Lighthouse at **93 / 100 /
+passing**, **0 CSP violations** across 17 pages, **31 internal routes with no broken links**, and Lighthouse at **93 / 100 /
 100 / 100**.
 
 Performance is gated at 85. It was advisory for a long time because local scores
@@ -64,7 +65,30 @@ All flags are read in `src/lib/content-config.ts` and `src/lib/site.ts`.
 | `NEXT_PUBLIC_SITE_URL` | `https://omnexalabs.com` | Canonical URLs, sitemap, structured data |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | unset | Activates the contact channels. While unset, `/company/contact` says so plainly rather than showing a form that discards input |
 | `NEXT_PUBLIC_PUBLISH_SYSTEMS` | `false` | Publishes Cadence / MedApp / ResearchOS. While off they are absent from navigation, the homepage, search and the sitemap, and `/systems` returns 404 |
+| `NEXT_PUBLIC_PUBLISH_RESEARCH_OUTPUTS` | `false` | Publishes research **output**: programs, projects, experiments, publications and the research-note insight category. See below |
 | `NEXT_PUBLIC_INCLUDE_SAMPLE_CONTENT` | `true` | Set `false` to strip every entity marked `sample: true` from all indexes, feeds and the sitemap |
+
+### Research direction vs research output
+
+The research is under way and results are not expected soon, so
+`NEXT_PUBLIC_PUBLISH_RESEARCH_OUTPUTS` is off and every research **output** is
+withheld. Each of those six records is `sample: true`, meaning a visitor would
+otherwise read invented findings and publication records as claims the lab is
+making.
+
+The four **research areas** are real and stay published, as does the operating
+model. That line is the whole point: a lab that states what it is investigating
+but has not yet published results is being accurate, whereas one listing
+fabricated publications is not. The research half of the mission rests on
+direction, not on output that does not exist.
+
+Two dependent surfaces stand down with the output, because both become
+meaningless without it rather than merely shorter: `/research/archive`, whose
+entries are drawn exclusively from those four types, and the research atlas,
+which visualises the area→programme→publication graph and would otherwise render
+four childless nodes. Removing the atlas also resolved a standing
+information-architecture defect, since it and the areas list below it were two
+presentations of the same four areas stacked back to back.
 
 ## Architecture
 

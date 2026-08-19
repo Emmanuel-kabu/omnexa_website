@@ -1,6 +1,6 @@
 import "server-only";
 
-import { contentConfig } from "@/lib/content-config";
+import { contentConfig, isPublishedInsightType } from "@/lib/content-config";
 import { isDirectlyAddressable, isPubliclyVisible } from "@/types/content";
 
 import { localContent } from "../adapters/local-provider";
@@ -76,24 +76,38 @@ export const researchRepository = {
     return localContent.researchAreas().find((area) => area.id === id) ?? null;
   },
 
+  /**
+   * Research areas are NOT gated by `publishResearchOutputs`. They describe
+   * what the lab is investigating, which is true today, whereas programs,
+   * projects, experiments and publications describe results that do not exist
+   * yet. Keeping that line clean is what lets the research half of the mission
+   * stand honestly while output stays withheld.
+   */
+
   async getPrograms(): Promise<ResearchProgram[]> {
+    if (!contentConfig.publishResearchOutputs) return [];
     return localContent.researchPrograms().filter(isListable).sort(byFeaturePriority);
   },
 
   async getProgramBySlug(slug: string): Promise<ResearchProgram | null> {
+    if (!contentConfig.publishResearchOutputs) return null;
     return bySlug(localContent.researchPrograms(), slug);
   },
 
   async getProjects(): Promise<ResearchProject[]> {
+    if (!contentConfig.publishResearchOutputs) return [];
     return localContent.researchProjects().filter(isListable).sort(byFeaturePriority);
   },
 
   async getProjectBySlug(slug: string): Promise<ResearchProject | null> {
+    if (!contentConfig.publishResearchOutputs) return null;
     return bySlug(localContent.researchProjects(), slug);
   },
 
   /** Stage 3 §31: featured is an editorial flag, never inferred from recency. */
   async getFeatured(limit = 3): Promise<Array<ResearchProgram | ResearchProject>> {
+    if (!contentConfig.publishResearchOutputs) return [];
+
     const programs = localContent
       .researchPrograms()
       .filter((item) => isListable(item) && item.featured);
@@ -107,6 +121,8 @@ export const researchRepository = {
 
 export const experimentRepository = {
   async getAll(): Promise<Experiment[]> {
+    if (!contentConfig.publishResearchOutputs) return [];
+
     return localContent
       .experiments()
       .filter(isListable)
@@ -114,6 +130,7 @@ export const experimentRepository = {
   },
 
   async getBySlug(slug: string): Promise<Experiment | null> {
+    if (!contentConfig.publishResearchOutputs) return null;
     return bySlug(localContent.experiments(), slug);
   },
 
@@ -124,6 +141,8 @@ export const experimentRepository = {
 
 export const publicationRepository = {
   async getAll(): Promise<Publication[]> {
+    if (!contentConfig.publishResearchOutputs) return [];
+
     return localContent
       .publications()
       .filter(isListable)
@@ -131,6 +150,7 @@ export const publicationRepository = {
   },
 
   async getBySlug(slug: string): Promise<Publication | null> {
+    if (!contentConfig.publishResearchOutputs) return null;
     return bySlug(localContent.publications(), slug);
   },
 
@@ -186,11 +206,14 @@ export const insightsRepository = {
     return localContent
       .insights()
       .filter(isListable)
+      .filter((item) => isPublishedInsightType(item.type))
       .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
   },
 
   async getBySlug(slug: string): Promise<Insight | null> {
-    return bySlug(localContent.insights(), slug);
+    const insight = bySlug(localContent.insights(), slug);
+    if (insight && !isPublishedInsightType(insight.type)) return null;
+    return insight;
   },
 
   async getByType(type: Insight["type"]): Promise<Insight[]> {

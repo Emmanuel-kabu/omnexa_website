@@ -10,6 +10,7 @@ import { ContinueBlock } from "@/components/navigation/continue-block";
 import { TechnicalLabel } from "@/components/typography/technical-label";
 import { DomainVisual } from "@/components/visualizations/domain-visual";
 import { researchRepository } from "@/content/repositories";
+import { contentConfig } from "@/lib/content-config";
 
 import styles from "./areas.module.css";
 
@@ -101,9 +102,12 @@ export default async function ResearchAreasPage() {
                     <TextAction href={`/research/areas/${area.slug}`}>
                       Explore {area.title}
                     </TextAction>
-                    <TextAction href={`/research/archive?area=${area.id}`}>
-                      All work in this area
-                    </TextAction>
+                    {/* The archive is withheld with the output it indexes. */}
+                    {contentConfig.publishResearchOutputs ? (
+                      <TextAction href={`/research/archive?area=${area.id}`}>
+                        All work in this area
+                      </TextAction>
+                    ) : null}
                   </div>
                 </div>
               </li>
@@ -112,16 +116,39 @@ export default async function ResearchAreasPage() {
         )}
       </Section>
 
+      {/* Every link in the "Browse research" form points at a research output
+          index, so the whole block is replaced rather than filtered while those
+          are withheld. It is replaced and not simply dropped because this page
+          would otherwise end cold, which is the defect ContinueBlock exists to
+          prevent. */}
       <Section tone="light" density="compact">
-        <ContinueBlock
-          title="Browse research"
-          links={[
-            { label: "All research in the archive", href: "/research/archive" },
-            { label: "Programs", href: "/research/programs" },
-            { label: "Projects", href: "/research/projects" },
-            { label: "Publications", href: "/research/publications" },
-          ]}
-        />
+        {contentConfig.publishResearchOutputs ? (
+          <ContinueBlock
+            title="Browse research"
+            links={[
+              { label: "All research in the archive", href: "/research/archive" },
+              { label: "Programs", href: "/research/programs" },
+              { label: "Projects", href: "/research/projects" },
+              { label: "Publications", href: "/research/publications" },
+            ]}
+          />
+        ) : (
+          <ContinueBlock
+            title="Continue"
+            links={[
+              {
+                label: "Applied engineering",
+                href: "/engineering",
+                detail:
+                  "The other half of the mission: how research becomes systems that run and can be evaluated.",
+              },
+              {
+                label: "How the lab works",
+                href: "/company/mission",
+              },
+            ]}
+          />
+        )}
       </Section>
     </main>
   );

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import { InsightsIndex } from "@/components/insights/insights-index";
+import { contentConfig } from "@/lib/content-config";
 
 export const metadata: Metadata = {
   title: "Research notes",
@@ -10,6 +12,15 @@ export const metadata: Metadata = {
 };
 
 export default function ResearchNotesPage() {
+  /*
+   * A research note reports an observation from work in progress, so it is a
+   * research output rather than editorial voice and is withheld with the rest.
+   * A 404 is the honest answer: an empty index would imply the lab has
+   * observed nothing, and would still be indexable. Restored by
+   * NEXT_PUBLIC_PUBLISH_RESEARCH_OUTPUTS=true.
+   */
+  if (!contentConfig.publishResearchOutputs) notFound();
+
   return (
     <InsightsIndex
       type="research-note"

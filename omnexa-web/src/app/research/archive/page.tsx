@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 
 import { StatusLabel } from "@/components/brand/status-label";
@@ -13,6 +14,8 @@ import {
 } from "@/content/repositories";
 import { formatDateTechnical } from "@/lib/format";
 import { RESEARCH_STATUS_LABELS, type ResearchStatus } from "@/types/content";
+
+import { contentConfig } from "@/lib/content-config";
 
 import styles from "./archive.module.css";
 
@@ -67,6 +70,14 @@ export default async function ArchivePage({
 }: {
   searchParams: Promise<SearchParams>;
 }) {
+  /*
+   * Withheld until there is real research output to publish. A 404 is the
+   * honest answer: an empty index would imply the lab has produced nothing,
+   * and would still be indexable. Restored by
+   * NEXT_PUBLIC_PUBLISH_RESEARCH_OUTPUTS=true.
+   */
+  if (!contentConfig.publishResearchOutputs) notFound();
+
   const query = await searchParams;
 
   const [programs, projects, experiments, publications, areas] =

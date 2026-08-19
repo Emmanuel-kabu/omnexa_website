@@ -6,6 +6,7 @@ import { Section } from "@/components/layout/section";
 import { TechnicalLabel } from "@/components/typography/technical-label";
 import { insightsRepository } from "@/content/repositories";
 import type { InsightType } from "@/content/schemas/editorial";
+import { isPublishedInsightType } from "@/lib/content-config";
 import { formatDateTechnical } from "@/lib/format";
 
 import styles from "./insights-index.module.css";
@@ -17,17 +18,32 @@ import styles from "./insights-index.module.css";
  * with no way to reach a category, and the three category routes had no inbound
  * body link anywhere on the site.
  */
-export const INSIGHT_CATEGORIES: Array<{ type: InsightType; label: string; href: string }> = [
+const ALL_INSIGHT_CATEGORIES: Array<{ type: InsightType; label: string; href: string }> = [
   { type: "research-note", label: "Research notes", href: "/insights/research-notes" },
   { type: "engineering", label: "Engineering", href: "/insights/engineering" },
   { type: "perspective", label: "Perspectives", href: "/insights/perspectives" },
   { type: "news", label: "News", href: "/insights/news" },
 ];
 
-/** Maps an article's type to the category route that lists it. */
+/**
+ * Only the categories whose route currently resolves. Research notes are
+ * withheld with the rest of the research output, and offering a tab to a route
+ * that 404s is worse than not offering it.
+ */
+export const INSIGHT_CATEGORIES = ALL_INSIGHT_CATEGORIES.filter((category) =>
+  isPublishedInsightType(category.type),
+);
+
+/**
+ * Maps an article's type to the category route that lists it.
+ *
+ * Resolved against the unfiltered list, then checked: a withheld category
+ * degrades to /insights rather than linking somewhere that 404s.
+ */
 export function insightCategoryHref(type: InsightType): string {
+  if (!isPublishedInsightType(type)) return "/insights";
   return (
-    INSIGHT_CATEGORIES.find((category) => category.type === type)?.href ??
+    ALL_INSIGHT_CATEGORIES.find((category) => category.type === type)?.href ??
     "/insights"
   );
 }

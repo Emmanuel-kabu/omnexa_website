@@ -138,12 +138,44 @@ const allMenuSections = [
 ] as const;
 
 /**
+ * Routes withheld while `publishResearchOutputs` is off.
+ *
+ * The four output indexes plus two surfaces that exist only to present them:
+ * the archive draws its entries exclusively from those types, and the atlas
+ * visualises the graph they form. Both would render empty rather than merely
+ * shorter, which is the case this list exists to prevent. Research Areas is
+ * absent from the list on purpose, since areas are real and stay published.
+ */
+const RESEARCH_OUTPUT_ROUTES = new Set([
+  "/research/programs",
+  "/research/projects",
+  "/research/experiments",
+  "/research/publications",
+  "/research/archive",
+  "/insights/research-notes",
+]);
+
+function isPublishedRoute(href: string): boolean {
+  if (!RESEARCH_OUTPUT_ROUTES.has(href)) return true;
+  return contentConfig.publishResearchOutputs;
+}
+
+/**
  * The expanded menu and the footer directory both read this, so hiding a
  * section removes it from both at once. Indices are re-derived so the menu
  * never shows a gap such as 01, 03, 04.
+ *
+ * Links are filtered before sections, because a section whose every child is
+ * withheld should disappear rather than render an empty column. Research
+ * survives that test on the strength of Research Areas alone.
  */
 export const menuSections = allMenuSections
   .filter((section) => contentConfig.publishSystems || section.href !== "/systems")
+  .map((section) => ({
+    ...section,
+    links: section.links.filter((link) => isPublishedRoute(link.href)),
+  }))
+  .filter((section) => section.links.length > 0)
   .map((section, position) => ({
     ...section,
     index: String(position + 1).padStart(2, "0"),

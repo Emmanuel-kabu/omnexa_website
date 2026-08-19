@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import { ContinueBlock } from "@/components/navigation/continue-block";
 import { OutcomeLabel, StatusLabel } from "@/components/brand/status-label";
@@ -8,6 +9,7 @@ import { Section } from "@/components/layout/section";
 import { TechnicalLabel } from "@/components/typography/technical-label";
 import { experimentRepository } from "@/content/repositories";
 import { formatDateTechnical } from "@/lib/format";
+import { contentConfig } from "@/lib/content-config";
 
 export const metadata: Metadata = {
   title: "Experiments",
@@ -22,6 +24,14 @@ export const metadata: Metadata = {
  * listed rather than hidden, per §48.
  */
 export default async function ExperimentsPage() {
+  /*
+   * Withheld until there is real research output to publish. A 404 is the
+   * honest answer: an empty index would imply the lab has produced nothing,
+   * and would still be indexable. Restored by
+   * NEXT_PUBLIC_PUBLISH_RESEARCH_OUTPUTS=true.
+   */
+  if (!contentConfig.publishResearchOutputs) notFound();
+
   const experiments = await experimentRepository.getAll();
 
   return (

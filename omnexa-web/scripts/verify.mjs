@@ -42,15 +42,15 @@ const steps = [];
 let server;
 
 try {
-  console.log("\n=== 1/6 typecheck ===");
+  console.log("\n=== 1/7 typecheck ===");
   await run(npx, ["tsc", "--noEmit"]);
   steps.push("typecheck");
 
-  console.log("\n=== 2/6 lint ===");
+  console.log("\n=== 2/7 lint ===");
   await run(npx, ["eslint", "src", "--max-warnings=0"]);
   steps.push("lint");
 
-  console.log("\n=== 3/6 production build ===");
+  console.log("\n=== 3/7 production build ===");
   await run(npx, ["next", "build"]);
   steps.push("build");
 
@@ -63,17 +63,21 @@ try {
   await waitForServer(BASE);
   console.log("server ready");
 
-  console.log("\n=== 4/6 accessibility (axe, WCAG 2.2 AA) ===");
+  console.log("\n=== 4/7 accessibility (axe, WCAG 2.2 AA) ===");
   await run(process.execPath, ["scripts/a11y-audit.mjs"]);
   steps.push("a11y");
 
-  console.log("\n=== 5/6 interaction (keyboard, focus, targets, overflow, motion, scheme) ===");
+  console.log("\n=== 5/7 interaction (keyboard, focus, targets, overflow, motion, scheme) ===");
   await run(process.execPath, ["scripts/interaction-audit.mjs"]);
   steps.push("interaction");
 
-  console.log("\n=== 6/6 security headers and CSP ===");
+  console.log("\n=== 6/7 security headers and CSP ===");
   await run(process.execPath, ["scripts/csp-audit.mjs"]);
   steps.push("csp");
+
+  console.log("\n=== 7/7 internal link integrity ===");
+  await run(process.execPath, ["scripts/link-audit.mjs"]);
+  steps.push("links");
 
   console.log(`\nALL CHECKS PASSED: ${steps.join(", ")}`);
 } catch (err) {
