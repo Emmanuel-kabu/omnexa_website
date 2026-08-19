@@ -1,0 +1,143 @@
+.feed {
+  margin-top: var(--omx-space-16);
+  display: grid;
+  gap: var(--omx-space-12);
+}
+
+@media (min-width: 1024px) {
+  .feed {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--omx-grid-gutter);
+  }
+
+  .lead {
+    grid-column: 1 / span 7;
+  }
+
+  .supporting {
+    grid-column: 9 / span 4;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Leading item
+ * ------------------------------------------------------------------------ */
+.lead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-6);
+  border-top: var(--omx-rule-width) solid var(--border-strong);
+  padding-top: var(--omx-space-6);
+}
+
+.leadMeta,
+.rowMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--omx-space-3);
+}
+
+.leadMeta {
+  justify-content: space-between;
+}
+
+.metaGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--omx-space-3);
+  flex-wrap: wrap;
+}
+
+.metaDivider {
+  width: var(--omx-space-6);
+  height: 0;
+  border-top: var(--omx-rule-width) solid var(--border-default);
+}
+
+.leadTitle {
+  max-width: 28ch;
+}
+
+.link {
+  /* inline-block + min-height so the tap target clears 24px; the heading text
+     alone is a 20px line box (WCAG 2.2 SC 2.5.8). */
+  display: inline-block;
+  min-height: 24px;
+  color: var(--text-primary);
+  transition: color var(--omx-transition-fast);
+}
+
+.link:hover {
+  color: var(--interactive-primary);
+}
+
+.leadAbstract {
+  color: var(--text-secondary);
+  max-width: var(--omx-measure-prose);
+}
+
+.leadFooter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--omx-space-6);
+  border-top: var(--omx-rule-width) solid var(--border-subtle);
+  padding-top: var(--omx-space-4);
+}
+
+.statusPair {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--omx-space-5);
+}
+
+/* ---------------------------------------------------------------------------
+ * Supporting rows
+ * ------------------------------------------------------------------------ */
+.supporting {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-3);
+  border-top: var(--omx-rule-width) solid var(--border-default);
+  padding-block: var(--omx-space-5);
+}
+
+.rowTitle {
+  max-width: 32ch;
+}
+
+.rowFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--omx-space-4);
+}
+
+/* ---------------------------------------------------------------------------
+ * Footer
+ * ------------------------------------------------------------------------ */
+.actions {
+  margin-top: var(--omx-space-12);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--omx-space-8);
+  border-top: var(--omx-rule-width) solid var(--border-default);
+  padding-top: var(--omx-space-5);
+}
+
+.empty {
+  margin-top: var(--omx-space-16);
+  color: var(--text-muted);
+  border-left: 2px solid var(--border-default);
+  padding-left: var(--omx-space-6);
+}

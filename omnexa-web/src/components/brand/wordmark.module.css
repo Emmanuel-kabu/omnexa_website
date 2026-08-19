@@ -1,0 +1,31 @@
+.link {
+  display: inline-flex;
+  align-items: center;
+  /* WCAG 2.2 SC 2.5.8: the mark is a 14px line box, so it needs padding to
+     reach a 24px target. */
+  min-height: 24px;
+}
+
+.mark {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4em;
+  font-family: var(--omx-font-display);
+  font-size: var(--omx-font-body-sm);
+  font-weight: var(--omx-weight-semibold);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.secondary {
+  font-weight: var(--omx-weight-regular);
+  color: var(--text-secondary);
+  transition: color var(--omx-transition-fast);
+}
+
+.link:hover .secondary {
+  color: var(--interactive-primary);
+}

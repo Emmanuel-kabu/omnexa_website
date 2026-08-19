@@ -1,0 +1,28 @@
+.muted {
+  color: var(--text-muted);
+}
+
+.secondary {
+  color: var(--text-secondary);
+}
+
+.primary {
+  color: var(--text-primary);
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--omx-space-4);
+  width: 100%;
+}
+
+.rowRule {
+  flex: 1 1 auto;
+  height: 0;
+  border-top: var(--omx-rule-width) solid var(--border-default);
+}

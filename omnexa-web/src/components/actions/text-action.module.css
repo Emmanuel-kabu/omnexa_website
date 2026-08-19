@@ -1,0 +1,102 @@
+.action {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--omx-space-3);
+  color: var(--text-primary);
+  /* Generous hit area without visual weight: comfortably clears the 44px
+     touch target minimum when stacked. */
+  padding-block: var(--omx-space-2);
+  transition: color var(--omx-transition-fast);
+}
+
+.action:hover {
+  color: var(--interactive-primary);
+}
+
+.arrow {
+  display: inline-block;
+  font-family: var(--omx-font-mono);
+  transition: transform var(--omx-transition-fast);
+  will-change: transform;
+}
+
+/* The arrow travels in the direction it points: motion that states where the
+   link goes, rather than decoration (Stage 1 §17). */
+.dir-internal:hover .arrow,
+.dir-internal:focus-visible .arrow {
+  transform: translateX(0.25em);
+}
+
+.dir-external:hover .arrow,
+.dir-external:focus-visible .arrow {
+  transform: translate(0.2em, -0.2em);
+}
+
+.dir-scroll:hover .arrow,
+.dir-scroll:focus-visible .arrow {
+  transform: translateY(0.25em);
+}
+
+/* ---------------------------------------------------------------------------
+ * text: the default. A rule grows under the label on hover.
+ * ------------------------------------------------------------------------ */
+.text .label {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% var(--omx-rule-width);
+  padding-bottom: 0.15em;
+  transition: background-size var(--omx-transition-ui);
+}
+
+.text:hover .label,
+.text:focus-visible .label {
+  background-size: 100% var(--omx-rule-width);
+}
+
+/* ---------------------------------------------------------------------------
+ * primary / secondary: bordered, architectural, small radius (Stage 1 §15)
+ * ------------------------------------------------------------------------ */
+.primary,
+.secondary {
+  padding: var(--omx-space-4) var(--omx-space-6);
+  border-radius: var(--omx-radius-xs);
+  justify-content: space-between;
+  min-width: 14rem;
+  transition:
+    background-color var(--omx-transition-fast),
+    border-color var(--omx-transition-fast),
+    color var(--omx-transition-fast);
+}
+
+.primary {
+  background-color: var(--action-solid-bg);
+  color: var(--action-solid-text);
+  border: var(--omx-rule-width) solid var(--action-solid-bg);
+}
+
+.primary:hover {
+  background-color: var(--action-solid-bg-hover);
+  border-color: var(--action-solid-bg-hover);
+  color: var(--action-solid-text);
+}
+
+.secondary {
+  border: var(--omx-rule-width) solid var(--border-default);
+  color: var(--text-primary);
+}
+
+.secondary:hover {
+  border-color: var(--interactive-primary);
+  color: var(--interactive-primary);
+}
+
+.sm {
+  font-size: var(--omx-font-meta);
+  min-width: 0;
+}
+
+.sm.primary,
+.sm.secondary {
+  padding: var(--omx-space-3) var(--omx-space-4);
+}

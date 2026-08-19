@@ -1,0 +1,187 @@
+.layout {
+  display: grid;
+  gap: var(--omx-space-12);
+  /*
+   * An implicit grid column is sized `auto`, whose minimum is min-content, so
+   * a child that cannot shrink makes the column wider than its container and
+   * the whole page scrolls sideways. This showed up as 26px of horizontal
+   * overflow at 320px. minmax(0, 1fr) lets the column shrink below
+   * min-content, which is what the filter chips need in order to wrap.
+   */
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: 16rem minmax(0, 1fr);
+    gap: var(--omx-space-16);
+    align-items: start;
+  }
+
+  .filters {
+    position: sticky;
+    top: calc(var(--omx-header-height) + var(--omx-space-8));
+  }
+}
+
+.filters {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-8);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-3);
+  border-top: var(--omx-rule-width) solid var(--border-default);
+  padding-top: var(--omx-space-3);
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--omx-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.option {
+  display: inline-block;
+  padding: var(--omx-space-2) var(--omx-space-3);
+  border: var(--omx-rule-width) solid var(--border-default);
+  border-radius: var(--omx-radius-xs);
+  font-family: var(--omx-font-mono);
+  font-size: var(--omx-font-meta-sm);
+  letter-spacing: var(--omx-tracking-meta);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  transition:
+    color var(--omx-transition-fast),
+    border-color var(--omx-transition-fast),
+    background-color var(--omx-transition-fast);
+}
+
+.option:hover {
+  color: var(--interactive-primary);
+  border-color: var(--interactive-primary);
+}
+
+/* Active filter uses the accent: a genuine active state, which is what
+   Omnexa Electric is reserved for (Stage 1 §5.2). */
+.option[data-active] {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: var(--omx-inverse-100);
+}
+
+.clear {
+  align-self: flex-start;
+}
+
+.results {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-6);
+}
+
+.search {
+  display: flex;
+  gap: var(--omx-space-3);
+}
+
+.input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--omx-space-3) var(--omx-space-4);
+  background-color: var(--surface-raised);
+  border: var(--omx-rule-width) solid var(--border-default);
+  border-radius: var(--omx-radius-xs);
+  color: var(--text-primary);
+  font-size: var(--omx-font-body-sm);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.input:focus-visible {
+  border-color: var(--accent);
+}
+
+.submit {
+  padding: var(--omx-space-3) var(--omx-space-5);
+  border: var(--omx-rule-width) solid var(--text-primary);
+  border-radius: var(--omx-radius-xs);
+  background-color: var(--action-solid-bg);
+  color: var(--action-solid-text);
+  transition: background-color var(--omx-transition-fast);
+}
+
+.submit:hover {
+  background-color: var(--action-solid-bg-hover);
+}
+
+.count {
+  border-bottom: var(--omx-rule-width) solid var(--border-subtle);
+  padding-bottom: var(--omx-space-3);
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--omx-space-6);
+  border-top: var(--omx-rule-width) solid var(--border-default);
+  padding-top: var(--omx-space-5);
+}
+
+.pageLink {
+  font-family: var(--omx-font-mono);
+  font-size: var(--omx-font-meta);
+  letter-spacing: var(--omx-tracking-meta);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  transition: color var(--omx-transition-fast);
+}
+
+.pageLink:hover {
+  color: var(--interactive-primary);
+}
+
+.pages {
+  display: flex;
+  gap: var(--omx-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pageNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  min-height: 2rem;
+  border: var(--omx-rule-width) solid transparent;
+  border-radius: var(--omx-radius-xs);
+  font-family: var(--omx-font-mono);
+  font-size: var(--omx-font-meta);
+  color: var(--text-muted);
+  transition:
+    color var(--omx-transition-fast),
+    border-color var(--omx-transition-fast);
+}
+
+.pageNumber:hover {
+  color: var(--interactive-primary);
+  border-color: var(--border-default);
+}
+
+.pageNumber[data-active] {
+  color: var(--text-primary);
+  border-color: var(--accent);
+}

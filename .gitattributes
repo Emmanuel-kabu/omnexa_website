@@ -1,0 +1,16 @@
+# Normalise line endings in the repository to LF, checkout native.
+# Without this, files committed from Windows carry CRLF and the Linux CI runner
+# sees different bytes than the author did.
+* text=auto eol=lf
+
+# Fonts are binary. Marking them explicitly guarantees git never applies
+# line-ending conversion, which would silently corrupt a woff2 file.
+*.woff2 binary
+*.woff  binary
+*.ico   binary
+*.png   binary
+*.jpg   binary
+*.pdf   binary
+
+# Generated; collapse in diffs and reviews.
+package-lock.json linguist-generated=true -diff

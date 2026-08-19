@@ -1,0 +1,34 @@
+/**
+ * Omnexa Labs: Motion tokens
+ * Stage 1 §17-18, Stage 3 §33
+ *
+ * Motion communicates causality, state, hierarchy or computation.
+ * Custom easing curves are preferred over exaggerated spring motion.
+ *
+ * Every duration collapses to 1ms under `prefers-reduced-motion: reduce`
+ * (see styles/base.css), so any transition written against these tokens
+ * becomes an instant state switch rather than needing a bespoke fallback.
+ */
+
+:root {
+  /* Durations: Stage 1 §18 */
+  --omx-motion-instant: 80ms;
+  --omx-motion-fast: 160ms; /* hover / fast state   120-180ms */
+  --omx-motion-ui: 240ms; /*   controls / nav       180-260ms */
+  --omx-motion-section: 600ms; /* section transition 400-700ms */
+  --omx-motion-cinematic: 1200ms; /* narrative       800-1600ms */
+
+  /* Easing */
+  --omx-ease-standard: cubic-bezier(0.2, 0, 0.2, 1);
+  --omx-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --omx-ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --omx-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Composed transitions */
+  --omx-transition-fast: var(--omx-motion-fast) var(--omx-ease-standard);
+  --omx-transition-ui: var(--omx-motion-ui) var(--omx-ease-standard);
+  --omx-transition-section: var(--omx-motion-section) var(--omx-ease-out);
+
+  /* Stagger step for section reveals */
+  --omx-stagger: 60ms;
+}

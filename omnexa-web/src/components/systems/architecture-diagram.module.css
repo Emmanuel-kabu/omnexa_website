@@ -1,0 +1,117 @@
+.figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-10);
+}
+
+.caption {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-3);
+  max-width: var(--omx-measure-prose);
+}
+
+.captionTitle {
+  color: var(--text-primary);
+}
+
+.captionBody {
+  color: var(--text-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+ * Layers: a vertical spine on mobile, a lane per layer on desktop
+ * ------------------------------------------------------------------------ */
+.layers {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.layer {
+  display: grid;
+  gap: var(--omx-space-4);
+  border-top: var(--omx-rule-width) solid var(--border-default);
+  padding-block: var(--omx-space-6);
+}
+
+@media (min-width: 768px) {
+  .layer {
+    grid-template-columns: 12rem minmax(0, 1fr);
+    gap: var(--omx-grid-gutter);
+    align-items: start;
+  }
+}
+
+.layerHead {
+  display: flex;
+  align-items: baseline;
+  gap: var(--omx-space-3);
+}
+
+.nodes {
+  display: grid;
+  gap: var(--omx-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .nodes {
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  }
+}
+
+/* A node reads as a bordered region, not a rounded card: Stage 1 §13, §23 */
+.node {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-2);
+  padding: var(--omx-space-4);
+  border: var(--omx-rule-width) solid var(--border-default);
+  border-radius: var(--omx-radius-xs);
+  background-color: color-mix(in srgb, var(--surface-raised) 40%, transparent);
+}
+
+/* Actors are the human boundary of the system: marked with the accent */
+.node[data-type="actor"] {
+  border-color: var(--accent);
+}
+
+.nodeLabel {
+  font-family: var(--omx-font-display);
+  font-size: var(--omx-font-body);
+  font-weight: var(--omx-weight-medium);
+  color: var(--text-primary);
+}
+
+.nodeSummary {
+  color: var(--text-secondary);
+}
+
+.relations {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-1);
+  margin: var(--omx-space-2) 0 0;
+  padding: var(--omx-space-2) 0 0;
+  list-style: none;
+  border-top: var(--omx-rule-width) solid var(--border-subtle);
+}
+
+.relation {
+  display: flex;
+  align-items: baseline;
+  gap: var(--omx-space-2);
+  color: var(--text-muted);
+}
+
+.arrow {
+  font-family: var(--omx-font-mono);
+  color: var(--accent);
+  flex: none;
+}

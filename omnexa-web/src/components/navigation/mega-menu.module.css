@@ -1,0 +1,149 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--omx-z-overlay);
+
+  background-color: var(--surface-page);
+  color: var(--text-primary);
+
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  /* Closed state. `visibility` is animated too so the panel leaves the tab
+     order and pointer path once the transition finishes, rather than sitting
+     invisible on top of the page. */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-1rem);
+  transition:
+    opacity var(--omx-transition-ui),
+    transform var(--omx-motion-section) var(--omx-ease-out),
+    visibility 0s linear var(--omx-motion-ui);
+}
+
+.overlay[data-open] {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition:
+    opacity var(--omx-transition-ui),
+    transform var(--omx-motion-section) var(--omx-ease-out),
+    visibility 0s;
+}
+
+.inner {
+  min-height: 100%;
+  width: 100%;
+  max-width: var(--omx-content-max);
+  margin-inline: auto;
+  padding-inline: var(--omx-page-margin);
+  padding-top: calc(var(--omx-header-height) + var(--omx-space-12));
+  padding-bottom: var(--omx-space-12);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--omx-space-16);
+}
+
+/* ---------------------------------------------------------------------------
+ * Sections: one column on phones, five across on desktop
+ * ------------------------------------------------------------------------ */
+.sections {
+  display: grid;
+  gap: var(--omx-space-12);
+}
+
+@media (min-width: 768px) {
+  .sections {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--omx-space-16) var(--omx-grid-gutter);
+  }
+}
+
+@media (min-width: 1024px) {
+  .sections {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--omx-grid-gutter);
+  }
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-4);
+  border-top: var(--omx-rule-width) solid var(--border-default);
+  padding-top: var(--omx-space-4);
+}
+
+.sectionIndex {
+  color: var(--text-muted);
+}
+
+.sectionTitle {
+  font-family: var(--omx-font-display);
+  font-size: var(--omx-font-h3);
+  font-weight: var(--omx-weight-medium);
+  letter-spacing: var(--omx-tracking-heading);
+  line-height: var(--omx-leading-snug);
+  color: var(--text-primary);
+  transition: color var(--omx-transition-fast);
+}
+
+.sectionTitle:hover {
+  color: var(--interactive-primary);
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: inline-block;
+  padding-block: var(--omx-space-2);
+  font-size: var(--omx-font-body-sm);
+  color: var(--text-secondary);
+  transition: color var(--omx-transition-fast);
+}
+
+.link:hover {
+  color: var(--interactive-primary);
+}
+
+/* ---------------------------------------------------------------------------
+ * Footer of the overlay
+ * ------------------------------------------------------------------------ */
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--omx-space-8);
+
+  border-top: var(--omx-rule-width) solid var(--border-default);
+  padding-top: var(--omx-space-6);
+}
+
+.utility {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--omx-space-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.utilityLink {
+  color: var(--text-muted);
+  padding-block: var(--omx-space-2);
+  transition: color var(--omx-transition-fast);
+}
+
+.utilityLink:hover {
+  color: var(--interactive-primary);
+}

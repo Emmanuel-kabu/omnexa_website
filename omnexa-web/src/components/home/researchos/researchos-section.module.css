@@ -1,0 +1,185 @@
+.section {
+  background-color: var(--surface-sunken);
+  color: var(--text-primary);
+  padding-block: var(--omx-section-monumental);
+  border-top: var(--omx-rule-width) solid var(--border-default);
+}
+
+.inner {
+  width: 100%;
+  max-width: var(--omx-content-max);
+  margin-inline: auto;
+  padding-inline: var(--omx-page-margin);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-16);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-8);
+}
+
+.headerMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--omx-space-4);
+}
+
+.rule {
+  flex: 1 1 auto;
+  height: 0;
+  border-top: var(--omx-rule-width) solid var(--border-default);
+}
+
+.reveal {
+  border-left: 2px solid var(--accent);
+  padding-left: var(--omx-space-5);
+}
+
+/* ---------------------------------------------------------------------------
+ * Body: instrumental density (Stage 1 §31.3)
+ * ------------------------------------------------------------------------ */
+.body {
+  display: grid;
+  gap: var(--omx-space-16);
+}
+
+@media (min-width: 1024px) {
+  .body {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--omx-grid-gutter);
+    align-items: start;
+  }
+
+  .copy {
+    grid-column: 1 / span 5;
+  }
+
+  .pipeline {
+    grid-column: 7 / span 6;
+  }
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-6);
+  color: var(--text-secondary);
+  max-width: var(--omx-measure-prose);
+}
+
+.support {
+  color: var(--text-muted);
+}
+
+.statusBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-2);
+  border-left: 2px solid var(--border-strong);
+  padding-left: var(--omx-space-5);
+  margin-block: var(--omx-space-2);
+}
+
+.statusNote {
+  color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------------------------
+ * Pipeline
+ * ------------------------------------------------------------------------ */
+.pipeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-10);
+}
+
+.pipelineTitle {
+  padding-bottom: var(--omx-space-4);
+  border-bottom: var(--omx-rule-width) solid var(--border-default);
+}
+
+.stages {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+}
+
+/* The connecting spine: the lifecycle is a loop, drawn as one continuous rule
+   through every stage marker. */
+.stages::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 0.9rem;
+  bottom: 0.9rem;
+  width: 0;
+  border-left: var(--omx-rule-width) solid var(--border-strong);
+}
+
+.stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--omx-space-5);
+  padding-block: var(--omx-space-4);
+}
+
+.stageMarker {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--omx-radius-full);
+  background-color: var(--surface-sunken);
+  border: 1px solid var(--border-strong);
+  transform: translateY(-0.15em);
+}
+
+/* First and last stages mark the ends of the loop */
+.stage:first-child .stageMarker,
+.stage:last-child .stageMarker {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+.stageLabel {
+  color: var(--text-primary);
+}
+
+/* ---------------------------------------------------------------------------
+ * Cross-cutting layers
+ * ------------------------------------------------------------------------ */
+.crossCutting {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-4);
+  border-top: var(--omx-rule-width) solid var(--border-default);
+  padding-top: var(--omx-space-5);
+}
+
+.crossList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--omx-space-2) var(--omx-space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text-muted);
+}
+
+.crossList li {
+  display: flex;
+  align-items: center;
+  gap: var(--omx-space-5);
+}
+
+.crossList li:not(:last-child)::after {
+  content: "";
+  width: var(--omx-space-4);
+  height: 0;
+  border-top: var(--omx-rule-width) solid var(--border-default);
+}

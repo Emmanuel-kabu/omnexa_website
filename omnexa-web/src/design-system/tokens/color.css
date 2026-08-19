@@ -1,0 +1,117 @@
+/**
+ * Omnexa Labs: Color primitives
+ * Stage 1 §5-6, §28
+ *
+ * These are RAW primitives. Components must never consume them directly:
+ * they consume the semantic layer in `themes/semantic.css`, which maps these
+ * primitives per surface tone. See Stage 7 §10.
+ *
+ * ACCESSIBILITY NOTE (deviation from Stage 1 §5.1, documented):
+ * The specified `--omx-text-muted: #8a8a86` yields 3.23:1 on the #f7f7f4
+ * canvas. Stage 1 §32.4 mandates WCAG AA (4.5:1 for the 0.75rem metadata
+ * this token is used for). We therefore split the token:
+ *   - `--omx-neutral-500` (#6e6e6a, 4.77:1) for muted TEXT
+ *   - `--omx-neutral-400` (#8a8a86, 3.23:1) for non-text/decorative use only
+ * The same correction is applied to the research domain and status colors.
+ */
+
+:root {
+  /* ---------------------------------------------------------------------
+   * Neutral canvas
+   * ------------------------------------------------------------------ */
+  --omx-paper: #ffffff;
+  --omx-bg-primary: #f7f7f4;
+  --omx-bg-secondary: #efefeb;
+  --omx-bg-tertiary: #e6e6e1;
+
+  --omx-bg-inverse: #080808;
+  --omx-bg-inverse-raised: #121212;
+  --omx-bg-inverse-overlay: #1a1a1a;
+
+  /* ---------------------------------------------------------------------
+   * Neutral text ramp: light surfaces
+   * Contrast measured against --omx-bg-primary (#f7f7f4)
+   * ------------------------------------------------------------------ */
+  /*
+   * Contrast is checked against every surface the token can land on, not just
+   * the page background. The previous muted value (#6e6e6a) cleared 4.77:1 on
+   * --surface-page but only 4.44:1 on --surface-subtle and 4.09:1 on
+   * --surface-sunken, and the 12px mono metadata that uses it sits on all
+   * three. Lighthouse caught it; reasoning about one background had not.
+   *   #656561 -> page 5.45, subtle 5.08, sunken 4.67
+   */
+  --omx-neutral-900: #0a0a0a; /* 18.9:1  primary text */
+  --omx-neutral-700: #555555; /*  6.94:1 secondary text */
+  --omx-neutral-500: #656561; /*  muted text, AA on EVERY light surface */
+  --omx-neutral-400: #8a8a86; /*  3.23:1 decorative / non-text ONLY */
+  --omx-neutral-300: #d9d9d4; /*  structural rules */
+  --omx-neutral-200: #e8e8e3; /*  subtle dividers */
+  --omx-neutral-100: #f1f1ee;
+
+  /* ---------------------------------------------------------------------
+   * Neutral text ramp: dark surfaces
+   * Contrast measured against --omx-bg-inverse (#080808)
+   * ------------------------------------------------------------------ */
+  --omx-inverse-100: #f1f1ee; /* 17.4:1 primary text on dark */
+  --omx-inverse-300: #b4b4af; /*  9.6:1 secondary text on dark */
+  --omx-inverse-500: #85857f; /*  5.40:1 muted text on dark: AA safe */
+  --omx-inverse-600: #6f6f6b; /*  3.94:1 decorative / non-text ONLY */
+  --omx-inverse-800: #262626; /*  structural rules on dark */
+  --omx-inverse-900: #1a1a1a; /*  subtle dividers on dark */
+
+  /* ---------------------------------------------------------------------
+   * Omnexa Electric: Stage 1 §5.2
+   * Reserved for active computation, active state, selection,
+   * interaction and connected systems. Target ~5% of visible surface.
+   * ------------------------------------------------------------------ */
+  --omx-accent: #315cff; /* 4.77:1 on light canvas */
+  --omx-accent-hover: #234ae0;
+  --omx-accent-active: #1c3cbd;
+  --omx-accent-on-dark: #6b8cff; /* 6.50:1 on #080808 */
+  --omx-accent-wash: rgba(49, 92, 255, 0.08);
+  --omx-accent-wash-strong: rgba(49, 92, 255, 0.16);
+  --omx-accent-wash-on-dark: rgba(107, 140, 255, 0.14);
+
+  /* ---------------------------------------------------------------------
+   * Research domain colors: Stage 1 §6
+   * Subordinate to the accent. Used for visualization, node
+   * classification and metadata: never as large decorative fills.
+   * Always paired with a text label or domain code; never color alone.
+   * ------------------------------------------------------------------ */
+  --omx-domain-di: #315cff; /* Developmental Intelligence: Electric   4.77:1 */
+  --omx-domain-fm: #6d4aff; /* Foundation Models       : Violet      4.80:1 */
+  --omx-domain-am: #b83a1e; /* Algorithms & Mathematics: Vermilion   5.34:1 */
+  --omx-domain-se: #0b6e4b; /* Software & Systems      : Emerald     5.84:1 */
+
+  --omx-domain-di-on-dark: #6b8cff;
+  --omx-domain-fm-on-dark: #9d85ff;
+  --omx-domain-am-on-dark: #ff8f6b;
+  --omx-domain-se-on-dark: #35c48d;
+
+  /* ---------------------------------------------------------------------
+   * Research status: Stage 1 §28, Stage 2 §14
+   * Never the sole carrier of meaning: always rendered with its label.
+   * ------------------------------------------------------------------ */
+  --omx-status-proposed: #555555;
+  --omx-status-experimental: #6d4aff;
+  --omx-status-active: #315cff;
+  --omx-status-validating: #8a5a00; /* 5.52:1 */
+  --omx-status-published: #0b6e4b;
+  --omx-status-paused: #6e6e6a;
+  --omx-status-archived: #6e6e6a;
+
+  --omx-status-proposed-on-dark: #b4b4af;
+  --omx-status-experimental-on-dark: #9d85ff;
+  --omx-status-active-on-dark: #6b8cff;
+  --omx-status-validating-on-dark: #e0a33a;
+  --omx-status-published-on-dark: #35c48d;
+  --omx-status-paused-on-dark: #85857f;
+  --omx-status-archived-on-dark: #85857f;
+
+  /* ---------------------------------------------------------------------
+   * Feedback
+   * ------------------------------------------------------------------ */
+  --omx-critical: #b3261e; /* 5.9:1 */
+  --omx-critical-on-dark: #ff8a80;
+  --omx-critical-wash: rgba(179, 38, 30, 0.08);
+}

@@ -1,0 +1,78 @@
+/**
+ * Omnexa Labs: Utilities
+ *
+ * A deliberately small layer. Stage 7 §3 warns against letting the visual
+ * system depend on large amounts of inline utility duplication, so this file
+ * carries only genuinely cross-cutting concerns: accessibility helpers, the
+ * page container, and the structural rule primitive.
+ */
+
+/* ---------------------------------------------------------------------------
+ * Screen-reader only. Visible again on focus for skip links.
+ * ------------------------------------------------------------------------ */
+.omx-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.omx-visually-hidden-focusable:not(:focus):not(:focus-within) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------------------------------------------------------------------------
+ * Page container: the 1600px canvas with responsive margins
+ * ------------------------------------------------------------------------ */
+.omx-container {
+  width: 100%;
+  max-width: var(--omx-content-max);
+  margin-inline: auto;
+  padding-inline: var(--omx-page-margin);
+}
+
+/* ---------------------------------------------------------------------------
+ * Structural rule: Stage 1 §12
+ * ------------------------------------------------------------------------ */
+.omx-rule {
+  border: 0;
+  border-top: var(--omx-rule-width) solid var(--border-default);
+  width: 100%;
+  margin: 0;
+}
+
+.omx-rule-subtle {
+  border-top-color: var(--border-subtle);
+}
+
+/* ---------------------------------------------------------------------------
+ * Reading measure
+ * ------------------------------------------------------------------------ */
+.omx-measure {
+  max-width: var(--omx-measure-prose);
+}
+
+.omx-measure-lede {
+  max-width: var(--omx-measure-lede);
+}
+
+/* ---------------------------------------------------------------------------
+ * Long content that must scroll inside itself rather than breaking the page
+ * ------------------------------------------------------------------------ */
+.omx-scroll-x {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}

@@ -1,0 +1,125 @@
+/**
+ * Tile.
+ *
+ * Every value here comes from the token layer. The rules that keep this from
+ * becoming a SaaS card are deliberate and worth stating:
+ *   - radius is --omx-radius-xs (2px), the smallest step; never the 8px one
+ *   - no box-shadow at any state, including hover
+ *   - the surface is flat: it does not lift, tint or elevate
+ *   - the border is a hairline, the same rule weight used everywhere else
+ */
+
+.grid {
+  display: grid;
+  gap: var(--omx-grid-gutter);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 640px) {
+  .cols2,
+  .cols3,
+  .cols4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .cols3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cols4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * The tile itself
+ * ------------------------------------------------------------------------ */
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-3);
+
+  padding: var(--omx-space-6);
+  border: var(--omx-rule-width) solid var(--border-default);
+  border-radius: var(--omx-radius-xs);
+
+  /* Flat. The tile is distinguished by its boundary, not by elevation. */
+  background-color: transparent;
+
+  transition:
+    border-color var(--omx-transition-ui),
+    background-color var(--omx-transition-ui);
+}
+
+/* A faint wash only where the surrounding surface is the page itself, so the
+   tile reads as a region rather than a floating object. */
+.tile {
+  background-color: color-mix(in srgb, var(--surface-raised) 35%, transparent);
+}
+
+.title {
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+
+.detail {
+  color: var(--text-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+ * Interactive tiles
+ * ------------------------------------------------------------------------ */
+.interactive:hover {
+  border-color: var(--interactive-primary);
+}
+
+.interactive:focus-within {
+  border-color: var(--focus-ring);
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-3);
+  height: 100%;
+  color: inherit;
+}
+
+/* The whole tile is the hit area, so the link stretches over it. */
+.link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.interactive {
+  position: relative;
+}
+
+.interactive .title {
+  transition: color var(--omx-transition-fast);
+}
+
+.interactive:hover .title {
+  color: var(--interactive-primary);
+}
+
+.arrow {
+  margin-top: auto;
+  padding-top: var(--omx-space-3);
+  font-family: var(--omx-font-mono);
+  color: var(--text-muted);
+  transition:
+    transform var(--omx-transition-fast),
+    color var(--omx-transition-fast);
+}
+
+.interactive:hover .arrow {
+  transform: translateX(0.25em);
+  color: var(--interactive-primary);
+}

@@ -1,0 +1,26 @@
+.skip {
+  position: fixed;
+  top: var(--omx-space-4);
+  left: var(--omx-space-4);
+  z-index: var(--omx-z-skip-link);
+
+  display: inline-block;
+  padding: var(--omx-space-3) var(--omx-space-5);
+  background-color: var(--omx-neutral-900);
+  color: var(--omx-inverse-100);
+  border-radius: var(--omx-radius-xs);
+
+  font-family: var(--omx-font-sans);
+  font-size: var(--omx-font-body-sm);
+  font-weight: var(--omx-weight-medium);
+
+  /* Off-screen rather than `display: none`, so it stays focusable */
+  transform: translateY(calc(-100% - var(--omx-space-8)));
+  transition: transform var(--omx-transition-ui);
+}
+
+.skip:focus-visible {
+  transform: translateY(0);
+  outline: 2px solid var(--omx-accent);
+  outline-offset: 3px;
+}

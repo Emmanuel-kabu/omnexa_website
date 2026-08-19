@@ -1,0 +1,131 @@
+.positioning {
+  display: grid;
+  gap: var(--omx-space-10);
+}
+
+@media (min-width: 1024px) {
+  .positioning {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--omx-grid-gutter);
+    align-items: start;
+  }
+
+  .positioning > :first-child {
+    grid-column: 1 / span 6;
+  }
+
+  .positioningBody {
+    grid-column: 8 / span 5;
+  }
+}
+
+.positioningBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-8);
+  color: var(--text-secondary);
+}
+
+.framing {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: var(--omx-rule-width) solid var(--border-default);
+}
+
+.framing li {
+  color: var(--text-primary);
+  padding-block: var(--omx-space-4);
+  border-bottom: var(--omx-rule-width) solid var(--border-subtle);
+}
+
+.divisions,
+.principles {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: var(--omx-rule-width) solid var(--border-default);
+}
+
+@media (min-width: 768px) {
+  .divisions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--omx-grid-gutter);
+  }
+}
+
+.division {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-3);
+  padding-block: var(--omx-space-6);
+  padding-right: var(--omx-space-6);
+  border-bottom: var(--omx-rule-width) solid var(--border-subtle);
+}
+
+.divisionTitle {
+  max-width: 26ch;
+}
+
+.link {
+  color: var(--text-primary);
+  transition: color var(--omx-transition-fast);
+}
+
+.link:hover {
+  color: var(--interactive-primary);
+}
+
+.divisionSummary {
+  color: var(--text-secondary);
+}
+
+.loop {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: var(--omx-rule-width) solid var(--border-default);
+}
+
+@media (min-width: 768px) {
+  .loop {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    column-gap: var(--omx-grid-gutter);
+  }
+}
+
+.loopStage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-2);
+  padding-block: var(--omx-space-5);
+  border-bottom: var(--omx-rule-width) solid var(--border-subtle);
+}
+
+@media (min-width: 768px) {
+  .loopStage {
+    border-bottom: 0;
+  }
+}
+
+.loopNote {
+  margin-top: var(--omx-space-6);
+  color: var(--accent);
+}
+
+.principle {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-2);
+  padding-block: var(--omx-space-5);
+  border-bottom: var(--omx-rule-width) solid var(--border-subtle);
+  color: var(--text-secondary);
+  max-width: var(--omx-measure-prose);
+}

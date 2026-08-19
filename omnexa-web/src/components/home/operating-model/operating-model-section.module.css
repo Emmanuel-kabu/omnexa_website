@@ -1,0 +1,164 @@
+.loop {
+  margin-top: var(--omx-space-16);
+  position: relative;
+}
+
+.states {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  display: grid;
+  gap: 0;
+}
+
+/* ---------------------------------------------------------------------------
+ * Mobile / tablet: a vertical trajectory with a continuous spine.
+ * ------------------------------------------------------------------------ */
+.states::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1.1rem;
+  bottom: 1.1rem;
+  width: 0;
+  border-left: var(--omx-rule-width) solid var(--border-default);
+}
+
+.state {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--omx-space-6);
+  padding-block: var(--omx-space-6);
+}
+
+.stateMarker {
+  display: flex;
+  justify-content: center;
+  padding-top: 0.55rem;
+  width: 11px;
+}
+
+.stateDot {
+  width: 11px;
+  height: 11px;
+  border-radius: var(--omx-radius-full);
+  background-color: var(--surface-page);
+  border: var(--omx-rule-width) solid var(--border-strong);
+  flex: none;
+}
+
+/* The endpoints of the loop are marked: they are where the cycle closes */
+.state:first-child .stateDot,
+.state:last-child .stateDot {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+.stateBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-2);
+}
+
+.stateHead {
+  display: flex;
+  align-items: baseline;
+  gap: var(--omx-space-4);
+}
+
+.stateLabel {
+  color: var(--text-primary);
+}
+
+.stateDetail {
+  color: var(--text-secondary);
+  max-width: 48ch;
+}
+
+/* ---------------------------------------------------------------------------
+ * Desktop: the trajectory turns horizontal: six states along one line, with
+ * the return edge closing the loop beneath.
+ * ------------------------------------------------------------------------ */
+@media (min-width: 1024px) {
+  .states {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--omx-grid-gutter);
+  }
+
+  .states::before {
+    left: 0;
+    right: 0;
+    top: 5px;
+    bottom: auto;
+    width: auto;
+    height: 0;
+    border-left: 0;
+    border-top: var(--omx-rule-width) solid var(--border-default);
+  }
+
+  .state {
+    grid-template-columns: 1fr;
+    gap: var(--omx-space-5);
+    padding-block: 0;
+  }
+
+  .stateMarker {
+    justify-content: flex-start;
+    padding-top: 0;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Return edge
+ * ------------------------------------------------------------------------ */
+.returnEdge {
+  display: flex;
+  align-items: center;
+  gap: var(--omx-space-4);
+  padding-top: var(--omx-space-8);
+  color: var(--accent);
+}
+
+.returnLine {
+  flex: 1 1 auto;
+  height: 0;
+  border-top: var(--omx-rule-width) dashed var(--accent);
+  opacity: 0.6;
+}
+
+/* ---------------------------------------------------------------------------
+ * Closing principles
+ * ------------------------------------------------------------------------ */
+.principles {
+  margin-top: var(--omx-space-16);
+  display: grid;
+  gap: 0;
+  border-top: var(--omx-rule-width) solid var(--border-default);
+}
+
+@media (min-width: 768px) {
+  .principles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--omx-grid-gutter);
+  }
+}
+
+@media (min-width: 1024px) {
+  .principles {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.principle {
+  color: var(--text-primary);
+  padding-block: var(--omx-space-5);
+  border-bottom: var(--omx-rule-width) solid var(--border-subtle);
+}
+
+@media (min-width: 1024px) {
+  .principle {
+    border-bottom: 0;
+    padding-right: var(--omx-space-6);
+  }
+}

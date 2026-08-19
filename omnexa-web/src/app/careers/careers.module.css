@@ -1,0 +1,82 @@
+.reasons {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: var(--omx-rule-width) solid var(--border-default);
+}
+
+@media (min-width: 768px) {
+  .reasons {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--omx-grid-gutter);
+  }
+}
+
+@media (min-width: 1024px) {
+  .reasons {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.reason {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-2);
+  padding-block: var(--omx-space-6);
+  padding-right: var(--omx-space-6);
+  border-bottom: var(--omx-rule-width) solid var(--border-subtle);
+}
+
+.reasonDetail {
+  color: var(--text-secondary);
+}
+
+.roles {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: var(--omx-rule-width) solid var(--border-default);
+}
+
+.role {
+  border-bottom: var(--omx-rule-width) solid var(--border-default);
+}
+
+.roleLink {
+  display: grid;
+  gap: var(--omx-space-3);
+  padding-block: var(--omx-space-6);
+  align-items: baseline;
+}
+
+@media (min-width: 768px) {
+  .roleLink {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--omx-space-8);
+  }
+}
+
+.roleTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--omx-space-3);
+  flex-wrap: wrap;
+  font-family: var(--omx-font-display);
+  font-size: var(--omx-font-h3);
+  font-weight: var(--omx-weight-medium);
+  color: var(--text-primary);
+  transition: color var(--omx-transition-fast);
+}
+
+.roleLink:hover .roleTitle {
+  color: var(--interactive-primary);
+}
+
+.roleMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--omx-space-5);
+  color: var(--text-muted);
+}

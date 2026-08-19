@@ -1,0 +1,148 @@
+.footer {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--surface-page);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: var(--omx-content-max);
+  margin-inline: auto;
+  padding-inline: var(--omx-page-margin);
+  padding-block: var(--omx-section-monumental) var(--omx-space-12);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-24);
+}
+
+.manifesto {
+  max-width: 18ch;
+}
+
+/* ---------------------------------------------------------------------------
+ * Directory
+ * ------------------------------------------------------------------------ */
+.directory {
+  display: grid;
+  gap: var(--omx-space-10) var(--omx-grid-gutter);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 768px) {
+  .directory {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .directory {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-4);
+  border-top: var(--omx-rule-width) solid var(--border-default);
+  padding-top: var(--omx-space-4);
+}
+
+.columnTitle {
+  color: var(--text-muted);
+  font-weight: var(--omx-weight-regular);
+}
+
+.columnLinks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: inline-block;
+  /* 24px minimum target: these are directory links, not inline prose. */
+  padding-block: var(--omx-space-2);
+  min-height: 24px;
+  font-size: var(--omx-font-body-sm);
+  color: var(--text-secondary);
+  transition: color var(--omx-transition-fast);
+}
+
+.link:hover {
+  color: var(--interactive-primary);
+}
+
+/* ---------------------------------------------------------------------------
+ * Meta row
+ * ------------------------------------------------------------------------ */
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--omx-space-8);
+
+  border-top: var(--omx-rule-width) solid var(--border-default);
+  padding-top: var(--omx-space-6);
+}
+
+.metaBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-3);
+}
+
+.social {
+  display: flex;
+  gap: var(--omx-space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--omx-space-3);
+  color: var(--text-muted);
+}
+
+@media (min-width: 768px) {
+  .legal {
+    align-items: flex-end;
+  }
+}
+
+.legalLinks {
+  display: flex;
+  gap: var(--omx-space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The column heading doubles as the link to its section. inline-flex plus a
+   min-height gives it a 24px target; the heading text alone is a 16px line box
+   (WCAG 2.2 SC 2.5.8). */
+.columnTitleLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  color: inherit;
+  transition: color var(--omx-transition-fast);
+}
+
+.columnTitleLink:hover {
+  color: var(--interactive-primary);
+}

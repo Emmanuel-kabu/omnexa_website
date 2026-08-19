@@ -1,0 +1,252 @@
+.atlas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-8);
+  scroll-margin-top: calc(var(--omx-header-height) + var(--omx-space-8));
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--omx-space-4);
+  border-top: var(--omx-rule-width) solid var(--border-strong);
+  padding-top: var(--omx-space-4);
+}
+
+.reset {
+  color: var(--accent);
+  padding: var(--omx-space-2) var(--omx-space-3);
+  border: var(--omx-rule-width) solid var(--border-default);
+  border-radius: var(--omx-radius-xs);
+  transition: border-color var(--omx-transition-fast);
+}
+
+.reset:hover {
+  border-color: var(--accent);
+}
+
+/* ---------------------------------------------------------------------------
+ * Layout: Stage 4 §14.
+ * Mobile is content-first: the tree leads and the graph is hidden entirely
+ * rather than shrunk into unreadable nodes (§18).
+ * ------------------------------------------------------------------------ */
+.body {
+  display: grid;
+  gap: var(--omx-space-10);
+}
+
+@media (min-width: 1024px) {
+  .body {
+    grid-template-columns: 20rem minmax(0, 1fr) 18rem;
+    gap: var(--omx-grid-gutter);
+    align-items: start;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Semantic tree: the control surface
+ * ------------------------------------------------------------------------ */
+.tree {
+  min-width: 0;
+}
+
+.level,
+.subLevel {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.subLevel {
+  padding-left: var(--omx-space-5);
+  border-left: var(--omx-rule-width) solid var(--border-default);
+  margin-left: 3px;
+  margin-block: var(--omx-space-2);
+}
+
+.areaItem {
+  border-top: var(--omx-rule-width) solid var(--border-default);
+  padding-block: var(--omx-space-3);
+}
+
+.areaButton {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--omx-space-3);
+  width: 100%;
+  padding-block: var(--omx-space-2);
+  color: var(--text-secondary);
+  transition: color var(--omx-transition-fast);
+}
+
+.areaButton:hover,
+.areaButton[data-active] {
+  color: var(--text-primary);
+}
+
+.marker {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--omx-radius-full);
+  background-color: var(--node-color, var(--accent));
+  opacity: 0.55;
+  flex: none;
+  transition: opacity var(--omx-transition-fast);
+}
+
+.areaButton[data-active] .marker {
+  opacity: 1;
+}
+
+.areaLabel {
+  font-family: var(--omx-font-display);
+  font-size: var(--omx-font-body);
+  font-weight: var(--omx-weight-medium);
+  letter-spacing: -0.01em;
+  text-align: left;
+  line-height: var(--omx-leading-snug);
+}
+
+.areaCode {
+  flex: none;
+}
+
+.subButton,
+.programButton {
+  display: flex;
+  align-items: center;
+  gap: var(--omx-space-3);
+  width: 100%;
+  text-align: left;
+  padding-block: var(--omx-space-2);
+  font-size: var(--omx-font-body-sm);
+  color: var(--text-secondary);
+  transition: color var(--omx-transition-fast);
+}
+
+.subButton:hover,
+.programButton:hover,
+.subButton[data-active],
+.programButton[data-active] {
+  color: var(--interactive-primary);
+}
+
+.programButton {
+  color: var(--text-primary);
+  font-weight: var(--omx-weight-medium);
+}
+
+.count {
+  font-family: var(--omx-font-mono);
+  font-size: var(--omx-font-meta-sm);
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.projectLink {
+  display: inline-block;
+  padding-block: var(--omx-space-2);
+  font-size: var(--omx-font-body-sm);
+  color: var(--text-secondary);
+  transition: color var(--omx-transition-fast);
+}
+
+.projectLink:hover {
+  color: var(--interactive-primary);
+}
+
+.empty {
+  color: var(--text-muted);
+  padding-block: var(--omx-space-2);
+}
+
+/* ---------------------------------------------------------------------------
+ * Graph: desktop only (§18)
+ * ------------------------------------------------------------------------ */
+.graph {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .graph {
+    display: block;
+    /* Reserved square keeps the column stable as branches open and close */
+    aspect-ratio: 1;
+    padding: var(--omx-space-8);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Detail panel: §16
+ * ------------------------------------------------------------------------ */
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-4);
+  border-top: var(--omx-rule-width) solid var(--border-default);
+  padding-top: var(--omx-space-4);
+}
+
+@media (min-width: 1024px) {
+  .detail {
+    position: sticky;
+    top: calc(var(--omx-header-height) + var(--omx-space-8));
+  }
+}
+
+.detailHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--omx-space-3);
+  flex-wrap: wrap;
+  text-transform: capitalize;
+}
+
+.detailTitle {
+  color: var(--text-primary);
+}
+
+.detailSummary {
+  color: var(--text-secondary);
+}
+
+.counts {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  border-top: var(--omx-rule-width) solid var(--border-subtle);
+}
+
+.countRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--omx-space-4);
+  padding-block: var(--omx-space-2);
+  border-bottom: var(--omx-rule-width) solid var(--border-subtle);
+}
+
+.countValue {
+  margin: 0;
+  font-family: var(--omx-font-mono);
+  font-size: var(--omx-font-body-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+.detailLink {
+  align-self: flex-start;
+  font-family: var(--omx-font-sans);
+  font-size: var(--omx-font-body-sm);
+  font-weight: var(--omx-weight-medium);
+  color: var(--text-primary);
+  text-transform: capitalize;
+  transition: color var(--omx-transition-fast);
+}
+
+.detailLink:hover {
+  color: var(--interactive-primary);
+}

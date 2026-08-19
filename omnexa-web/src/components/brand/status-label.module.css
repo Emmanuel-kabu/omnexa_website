@@ -1,0 +1,81 @@
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--omx-space-2);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.prefix {
+  color: var(--text-muted);
+}
+
+.dot {
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: var(--omx-radius-full);
+  background-color: currentColor;
+  flex: none;
+}
+
+/* Colour reinforces the written label: it never replaces it. */
+.status[data-status="proposed"] .dot {
+  background-color: var(--status-proposed);
+}
+.status[data-status="experimental"] .dot {
+  background-color: var(--status-experimental);
+}
+.status[data-status="active"] .dot {
+  background-color: var(--status-active);
+}
+.status[data-status="validating"] .dot {
+  background-color: var(--status-validating);
+}
+.status[data-status="published"] .dot {
+  background-color: var(--status-published);
+}
+.status[data-status="paused"] .dot {
+  background-color: var(--status-paused);
+}
+.status[data-status="archived"] .dot {
+  background-color: var(--status-archived);
+}
+
+.status[data-outcome="preliminary"] .dot {
+  background-color: var(--status-proposed);
+}
+.status[data-outcome="validating"] .dot {
+  background-color: var(--status-validating);
+}
+.status[data-outcome="confirmed"] .dot {
+  background-color: var(--status-published);
+}
+.status[data-outcome="inconclusive"] .dot {
+  background-color: var(--text-muted);
+}
+.status[data-outcome="failed"] .dot {
+  background-color: var(--critical);
+}
+
+/* An active experiment is genuinely running: the pulse reports live state,
+   which is exactly the causality motion is reserved for (Stage 1 §17). */
+.status[data-status="active"] .dot {
+  animation: pulse 2400ms var(--omx-ease-in-out) infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status[data-status="active"] .dot {
+    animation: none;
+    opacity: 1;
+  }
+}

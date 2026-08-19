@@ -1,0 +1,37 @@
+/**
+ * Category facets. Deliberately the same chip vocabulary as the research
+ * archive filters, so the two discovery surfaces read as one system.
+ */
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--omx-space-2);
+  padding-bottom: var(--omx-space-8);
+}
+
+.category {
+  display: inline-block;
+  padding: var(--omx-space-2) var(--omx-space-4);
+  border: var(--omx-rule-width) solid var(--border-default);
+  border-radius: var(--omx-radius-xs);
+  font-family: var(--omx-font-mono);
+  font-size: var(--omx-font-meta-sm);
+  letter-spacing: var(--omx-tracking-meta);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  transition:
+    color var(--omx-transition-fast),
+    border-color var(--omx-transition-fast),
+    background-color var(--omx-transition-fast);
+}
+
+.category:hover {
+  color: var(--interactive-primary);
+  border-color: var(--interactive-primary);
+}
+
+.category[data-active] {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: var(--omx-inverse-100);
+}

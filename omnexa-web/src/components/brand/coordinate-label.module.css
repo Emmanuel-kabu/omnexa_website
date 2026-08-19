@@ -1,0 +1,6 @@
+.location {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-1);
+  color: var(--text-muted);
+}

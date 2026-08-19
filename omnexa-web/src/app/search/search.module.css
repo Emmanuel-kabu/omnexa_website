@@ -1,0 +1,60 @@
+.form {
+  display: flex;
+  gap: var(--omx-space-3);
+  max-width: 40rem;
+}
+
+.input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--omx-space-4) var(--omx-space-5);
+  background-color: var(--surface-raised);
+  border: var(--omx-rule-width) solid var(--border-default);
+  border-radius: var(--omx-radius-xs);
+  color: var(--text-primary);
+  font-size: var(--omx-font-body);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.input:focus-visible {
+  border-color: var(--accent);
+}
+
+.submit {
+  padding: var(--omx-space-4) var(--omx-space-6);
+  border: var(--omx-rule-width) solid var(--action-solid-bg);
+  border-radius: var(--omx-radius-xs);
+  background-color: var(--action-solid-bg);
+  color: var(--action-solid-text);
+  transition: background-color var(--omx-transition-fast);
+}
+
+.submit:hover {
+  background-color: var(--action-solid-bg-hover);
+}
+
+.count {
+  padding-bottom: var(--omx-space-6);
+}
+
+.noResults {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-4);
+  max-width: var(--omx-measure-prose);
+}
+
+.suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-2);
+  margin: var(--omx-space-2) 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text-secondary);
+  border-left: 2px solid var(--border-default);
+  padding-left: var(--omx-space-6);
+}

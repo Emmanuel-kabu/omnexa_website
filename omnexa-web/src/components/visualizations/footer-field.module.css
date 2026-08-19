@@ -1,0 +1,13 @@
+.wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  /* Kept deliberately quiet: Stage 3 §25 asks for the effect to stay subtle */
+  opacity: 0.28;
+
+  /* Fades out toward the content so the manifesto never fights the field */
+  mask-image: linear-gradient(to bottom, black 0%, transparent 78%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 78%);
+}

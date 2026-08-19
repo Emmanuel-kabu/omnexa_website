@@ -1,0 +1,58 @@
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-6);
+  border-top: var(--omx-rule-width) solid var(--border-default);
+  padding-top: var(--omx-space-6);
+}
+
+.title {
+  color: var(--text-primary);
+}
+
+.entry {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-3);
+}
+
+.entryHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--omx-space-4);
+  border-bottom: var(--omx-rule-width) solid var(--border-subtle);
+  padding-bottom: var(--omx-space-2);
+}
+
+.copy {
+  color: var(--text-muted);
+  padding: var(--omx-space-2) var(--omx-space-3);
+  border: var(--omx-rule-width) solid var(--border-default);
+  border-radius: var(--omx-radius-xs);
+  transition:
+    color var(--omx-transition-fast),
+    border-color var(--omx-transition-fast);
+}
+
+.copy:hover {
+  color: var(--interactive-primary);
+  border-color: var(--interactive-primary);
+}
+
+.value {
+  color: var(--text-secondary);
+}
+
+.pre {
+  margin: 0;
+  padding: var(--omx-space-4);
+  background-color: var(--surface-subtle);
+  border: var(--omx-rule-width) solid var(--border-subtle);
+  border-radius: var(--omx-radius-xs);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  color: var(--text-secondary);
+  font-size: var(--omx-font-body-sm);
+  line-height: var(--omx-leading-normal);
+}

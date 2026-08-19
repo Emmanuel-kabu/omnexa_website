@@ -1,0 +1,56 @@
+/**
+ * Omnexa Labs: Layout tokens
+ * Stage 1 §10, Stage 3 §36
+ *
+ * 12-column grid, 24px gutters, 48px page margin, 1600px max canvas.
+ * Page margin is responsive: mobile gets 20-24px (Stage 3 §36) rather
+ * than a shrunken desktop margin.
+ */
+
+:root {
+  --omx-grid-columns: 12;
+  --omx-grid-gutter: 1rem; /* 16px at mobile */
+  --omx-page-margin: 1.25rem; /* 20px at mobile */
+  --omx-content-max: 100rem; /* 1600px */
+  --omx-content-narrow: 60rem;
+
+  /* Header height, consumed by scroll-margin and hero top padding */
+  --omx-header-height: 4rem;
+
+  /* Hairline structural rule: Stage 1 §12 (0.5-1px) */
+  --omx-rule-width: 1px;
+  --omx-rule-width-hair: 0.5px;
+}
+
+@media (min-width: 480px) {
+  :root {
+    --omx-page-margin: 1.5rem; /* 24px */
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --omx-grid-gutter: 1.5rem; /* 24px */
+    --omx-page-margin: 2rem; /* 32px */
+    --omx-header-height: 4.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --omx-page-margin: 3rem; /* 48px: Stage 1 §10.1 */
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --omx-page-margin: 4rem; /* larger margins at xl: Stage 3 §36 */
+  }
+}
+
+/* Hairline rules only where the display can actually resolve them */
+@media (min-resolution: 2dppx) {
+  :root {
+    --omx-rule-width: 0.5px;
+  }
+}

@@ -1,0 +1,25 @@
+.divider {
+  border: 0;
+  width: 100%;
+  margin: 0;
+  border-top-style: solid;
+  border-top-width: var(--omx-rule-width);
+  transition: border-color var(--omx-transition-ui);
+}
+
+.subtle {
+  border-top-color: var(--border-subtle);
+}
+
+.default {
+  border-top-color: var(--border-default);
+}
+
+.strong {
+  border-top-color: var(--border-strong);
+}
+
+.active {
+  border-top-color: var(--accent);
+  border-top-width: 1px;
+}

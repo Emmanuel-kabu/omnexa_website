@@ -1,0 +1,193 @@
+.header {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: var(--omx-z-header);
+
+  height: var(--omx-header-height);
+  display: flex;
+  align-items: center;
+
+  /* Transparent and integrated with the hero at the top of the page */
+  background-color: transparent;
+  border-bottom: var(--omx-rule-width) solid transparent;
+
+  transition:
+    background-color var(--omx-transition-ui),
+    border-color var(--omx-transition-ui),
+    backdrop-filter var(--omx-transition-ui);
+}
+
+/* Stage 1 §16.2: subtle translucent surface after the scroll threshold */
+.header[data-scrolled] {
+  background-color: var(--header-scrolled-bg);
+  border-bottom-color: var(--border-subtle);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Without backdrop blur, translucency alone lets display type read straight
+   through the bar. Where the filter is unsupported, go fully opaque rather
+   than shipping an illegible navigation. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .header[data-scrolled] {
+    background-color: var(--header-scrolled-bg-opaque);
+  }
+}
+
+/* While the overlay is open the header sits on the overlay's own surface, so
+   it must not also paint a translucent bar of its own. */
+.header[data-menu-open] {
+  background-color: transparent;
+  border-bottom-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  z-index: calc(var(--omx-z-overlay) + 1);
+}
+
+.inner {
+  width: 100%;
+  max-width: var(--omx-content-max);
+  margin-inline: auto;
+  padding-inline: var(--omx-page-margin);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--omx-space-8);
+}
+
+/* ---------------------------------------------------------------------------
+ * Primary navigation: desktop only. Below `lg` the expanded menu carries the
+ * full hierarchy rather than compressing this row (Stage 3 §6).
+ * ------------------------------------------------------------------------ */
+.primary {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .primary {
+    display: block;
+  }
+}
+
+.navList {
+  display: flex;
+  align-items: center;
+  gap: var(--omx-space-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navLink {
+  position: relative;
+  display: inline-block;
+  padding-block: var(--omx-space-2);
+  color: var(--text-secondary);
+  transition: color var(--omx-transition-fast);
+}
+
+.navLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: var(--omx-rule-width);
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--omx-transition-ui);
+}
+
+.navLink:hover {
+  color: var(--text-primary);
+}
+
+.navLink:hover::after,
+.navLink:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* The active section is marked with the accent: an active state, which is
+   exactly what Omnexa Electric is reserved for (Stage 1 §5.2). */
+.navLink[data-active] {
+  color: var(--text-primary);
+}
+
+.navLink[data-active]::after {
+  transform: scaleX(1);
+  background-color: var(--accent);
+}
+
+/* ---------------------------------------------------------------------------
+ * Utility cluster
+ * ------------------------------------------------------------------------ */
+.utility {
+  display: flex;
+  align-items: center;
+  gap: var(--omx-space-6);
+}
+
+.utility > .navLink {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .utility > .navLink {
+    display: inline-block;
+  }
+}
+
+.menuTrigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--omx-space-3);
+  color: var(--text-primary);
+  padding-block: var(--omx-space-2);
+  transition: color var(--omx-transition-fast);
+}
+
+.menuTrigger:hover {
+  color: var(--interactive-primary);
+}
+
+.menuLabel {
+  min-width: 3.25em;
+  text-align: right;
+}
+
+/* Two rules that cross into an X when the menu opens: the glyph reports the
+   control's state rather than decorating it. */
+.menuGlyph {
+  position: relative;
+  width: 1.25rem;
+  height: 0.625rem;
+  flex: none;
+}
+
+.menuGlyph span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: var(--omx-rule-width);
+  background-color: currentColor;
+  transition: transform var(--omx-transition-ui);
+}
+
+.menuGlyph span:first-child {
+  top: 0;
+}
+
+.menuGlyph span:last-child {
+  bottom: 0;
+}
+
+.header[data-menu-open] .menuGlyph span:first-child {
+  transform: translateY(0.3125rem) rotate(45deg);
+}
+
+.header[data-menu-open] .menuGlyph span:last-child {
+  transform: translateY(-0.3125rem) rotate(-45deg);
+}

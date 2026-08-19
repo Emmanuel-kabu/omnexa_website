@@ -1,0 +1,89 @@
+.visual {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+/* Each domain gets its own semantic colour (Stage 1 §6), applied via a local
+   variable so every mark inside a variant stays consistent. */
+.visual[data-domain="DI"] {
+  --domain-color: var(--domain-di);
+}
+.visual[data-domain="FM"] {
+  --domain-color: var(--domain-fm);
+}
+.visual[data-domain="AM"] {
+  --domain-color: var(--domain-am);
+}
+.visual[data-domain="SE"] {
+  --domain-color: var(--domain-se);
+}
+
+.node {
+  fill: var(--text-primary);
+  opacity: 0.55;
+}
+
+.nodeAccent {
+  fill: var(--domain-color, var(--accent));
+}
+
+.line,
+.lineFaint,
+.lineAccent {
+  fill: none;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.line {
+  stroke: var(--text-primary);
+  stroke-opacity: 0.35;
+}
+
+.lineFaint {
+  stroke: var(--text-primary);
+  stroke-opacity: 0.12;
+}
+
+.lineAccent {
+  stroke: var(--domain-color, var(--accent));
+  stroke-opacity: 0.9;
+}
+
+.ring {
+  fill: none;
+  stroke: var(--text-primary);
+  stroke-opacity: 0.18;
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+  vector-effect: non-scaling-stroke;
+}
+
+.constraint {
+  fill: var(--domain-color, var(--accent));
+  fill-opacity: 0.07;
+  stroke: var(--domain-color, var(--accent));
+  stroke-opacity: 0.5;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.trajectory,
+.trajectoryAccent {
+  fill: none;
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.trajectory {
+  stroke: var(--text-primary);
+  stroke-opacity: 0.4;
+}
+
+.trajectoryAccent {
+  stroke: var(--domain-color, var(--accent));
+  stroke-opacity: 0.9;
+}

@@ -1,0 +1,18 @@
+/**
+ * Omnexa Labs: Z-index scale
+ * Stage 7 §8
+ *
+ * A single ordered scale. Components must not invent arbitrary z-index
+ * values; every stacking decision is registered here.
+ */
+
+:root {
+  --omx-z-below: -1; /* background visualizations */
+  --omx-z-base: 0;
+  --omx-z-raised: 10; /* sticky local navigation */
+  --omx-z-header: 100; /* site header */
+  --omx-z-overlay: 200; /* full-screen menu / search */
+  --omx-z-modal: 300;
+  --omx-z-toast: 400;
+  --omx-z-skip-link: 500; /* must outrank everything when focused */
+}

@@ -1,0 +1,17 @@
+/**
+ * Omnexa Labs: Radius tokens
+ * Stage 1 §13
+ *
+ * Architectural, not soft. There is deliberately NO large radius token:
+ * 24-40px SaaS-style rounded cards are an anti-pattern (Stage 1 §38).
+ * `--omx-radius-full` exists only for genuine circles: status dots and
+ * visualization nodes.
+ */
+
+:root {
+  --omx-radius-none: 0;
+  --omx-radius-xs: 2px;
+  --omx-radius-sm: 4px;
+  --omx-radius-md: 8px;
+  --omx-radius-full: 9999px;
+}

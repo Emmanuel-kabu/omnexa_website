@@ -1,0 +1,265 @@
+/**
+ * Omnexa Labs: Semantic token layer
+ * Stage 7 §10, Stage 1 §7
+ *
+ * Components consume ONLY these semantic tokens. They never reference
+ * `--omx-neutral-*` or `--omx-bg-*` primitives directly. That indirection is
+ * what makes a dark experiential section work without rewriting a component.
+ *
+ * TONE, NOT THEME
+ * ---------------
+ * Stage 1 §7 is explicit: dark is not a global inverted theme and not a user
+ * preference. It is used intentionally when the visitor moves *deeper* into
+ * Omnexa's systems (runtime, ResearchOS, immersive visualization):
+ *
+ *     PUBLIC RESEARCH → EXPERIMENTATION → RUNTIME → RESEARCHOS
+ *
+ * So tone is a property of a REGION, set by `data-tone` on any element.
+ * Nesting works, and a light island inside a dark section is legal:
+ *
+ *     <section data-tone="dark">   → inverse surfaces
+ *       <div data-tone="light">    → back to light
+ *
+ * TONE AND SCHEME ARE TWO SEPARATE AXES
+ * -------------------------------------
+ * Stage 1 §5.1 specifies a predominantly light site and §7 says dark is not a
+ * global inverted theme. The site now also honours the visitor's OS setting,
+ * which is an explicit decision to prioritise the reader's stated preference.
+ *
+ * Those two ideas would collide if scheme simply overwrote tone: in a dark OS
+ * theme every section would flatten to the same black and the research →
+ * runtime descent would vanish. So they are kept orthogonal:
+ *
+ *              light scheme          dark scheme
+ *   tone light   paper #f7f7f4    →    near-black #0d0d0d
+ *   tone dark    near-black       →    true black #000000
+ *
+ * A `data-tone="dark"` region therefore stays one step deeper than its
+ * surroundings in BOTH schemes, so the descent still reads either way.
+ */
+
+:root,
+[data-tone="light"] {
+  color-scheme: light;
+
+  /* Surfaces */
+  --surface-page: var(--omx-bg-primary);
+  --surface-subtle: var(--omx-bg-secondary);
+  --surface-sunken: var(--omx-bg-tertiary);
+  --surface-raised: var(--omx-paper);
+  --surface-contrast: var(--omx-bg-inverse);
+
+  /* Text */
+  --text-primary: var(--omx-neutral-900);
+  --text-secondary: var(--omx-neutral-700);
+  --text-muted: var(--omx-neutral-500);
+  --text-faint: var(--omx-neutral-400); /* non-text / decorative only */
+  --text-on-contrast: var(--omx-inverse-100);
+
+  /* Borders */
+  --border-strong: var(--omx-neutral-400);
+  --border-default: var(--omx-neutral-300);
+  --border-subtle: var(--omx-neutral-200);
+
+  /* Interaction */
+  --interactive-primary: var(--omx-accent);
+  --interactive-hover: var(--omx-accent-hover);
+  --interactive-active: var(--omx-accent-active);
+  --accent: var(--omx-accent);
+  --accent-wash: var(--omx-accent-wash);
+  --accent-wash-strong: var(--omx-accent-wash-strong);
+  --focus-ring: var(--omx-accent);
+
+  /* Inverted action surface (dark button on light page) */
+  --action-solid-bg: var(--omx-neutral-900);
+  --action-solid-bg-hover: var(--omx-accent);
+  --action-solid-text: var(--omx-inverse-100);
+
+  /* Research domains */
+  --domain-di: var(--omx-domain-di);
+  --domain-fm: var(--omx-domain-fm);
+  --domain-am: var(--omx-domain-am);
+  --domain-se: var(--omx-domain-se);
+
+  /* Research status */
+  --status-proposed: var(--omx-status-proposed);
+  --status-experimental: var(--omx-status-experimental);
+  --status-active: var(--omx-status-active);
+  --status-validating: var(--omx-status-validating);
+  --status-published: var(--omx-status-published);
+  --status-paused: var(--omx-status-paused);
+  --status-archived: var(--omx-status-archived);
+
+  /* Feedback */
+  --critical: var(--omx-critical);
+  --critical-wash: var(--omx-critical-wash);
+
+  /* Header scroll state: Stage 1 §16.2.
+     The spec suggests 0.85, but display type passing behind the bar at that
+     alpha collides with the navigation and costs legibility. 0.93 keeps the
+     effect subtle while the nav stays readable over an 11rem headline. */
+  --header-scrolled-bg: rgba(247, 247, 244, 0.93);
+  --header-scrolled-bg-opaque: #f7f7f4;
+}
+
+[data-tone="dark"] {
+  color-scheme: dark;
+
+  --surface-page: var(--omx-bg-inverse);
+  --surface-subtle: var(--omx-bg-inverse-raised);
+  --surface-sunken: #000000;
+  --surface-raised: var(--omx-bg-inverse-raised);
+  --surface-contrast: var(--omx-bg-primary);
+
+  --text-primary: var(--omx-inverse-100);
+  --text-secondary: var(--omx-inverse-300);
+  --text-muted: var(--omx-inverse-500);
+  --text-faint: var(--omx-inverse-600);
+  --text-on-contrast: var(--omx-neutral-900);
+
+  --border-strong: var(--omx-inverse-500);
+  --border-default: var(--omx-inverse-800);
+  --border-subtle: var(--omx-inverse-900);
+
+  /* Omnexa Electric remains visible in dark mode: Stage 1 §7:
+     but shifts to the lighter tint that clears AA on #080808. */
+  --interactive-primary: var(--omx-accent-on-dark);
+  --interactive-hover: #8ba5ff;
+  --interactive-active: var(--omx-accent);
+  --accent: var(--omx-accent-on-dark);
+  --accent-wash: var(--omx-accent-wash-on-dark);
+  --accent-wash-strong: rgba(107, 140, 255, 0.24);
+  --focus-ring: var(--omx-accent-on-dark);
+
+  --action-solid-bg: var(--omx-inverse-100);
+  --action-solid-bg-hover: var(--omx-accent-on-dark);
+  --action-solid-text: var(--omx-neutral-900);
+
+  --domain-di: var(--omx-domain-di-on-dark);
+  --domain-fm: var(--omx-domain-fm-on-dark);
+  --domain-am: var(--omx-domain-am-on-dark);
+  --domain-se: var(--omx-domain-se-on-dark);
+
+  --status-proposed: var(--omx-status-proposed-on-dark);
+  --status-experimental: var(--omx-status-experimental-on-dark);
+  --status-active: var(--omx-status-active-on-dark);
+  --status-validating: var(--omx-status-validating-on-dark);
+  --status-published: var(--omx-status-published-on-dark);
+  --status-paused: var(--omx-status-paused-on-dark);
+  --status-archived: var(--omx-status-archived-on-dark);
+
+  --critical: var(--omx-critical-on-dark);
+  --critical-wash: rgba(255, 138, 128, 0.1);
+
+  --header-scrolled-bg: rgba(8, 8, 8, 0.93);
+  --header-scrolled-bg-opaque: #080808;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * DARK SCHEME
+ *
+ * Follows the operating system / browser preference. Because tone and scheme
+ * are orthogonal, this block shifts BOTH tones one step deeper rather than
+ * collapsing them onto one surface:
+ *
+ *   tone light  →  #0d0d0d  (what most of the site becomes)
+ *   tone dark   →  #000000  (systems, ResearchOS, footer stay deeper still)
+ *
+ * Text, border, accent and status tokens reuse the inverse ramps that were
+ * already contrast-checked against near-black, so nothing here introduces an
+ * untested colour pair.
+ * ════════════════════════════════════════════════════════════════════════ */
+@media (prefers-color-scheme: dark) {
+  :root,
+  [data-tone="light"] {
+    color-scheme: dark;
+
+    --surface-page: #0d0d0d;
+    --surface-subtle: #151515;
+    --surface-sunken: #080808;
+    --surface-raised: #1a1a1a;
+    --surface-contrast: var(--omx-bg-primary);
+
+    --text-primary: var(--omx-inverse-100);
+    --text-secondary: var(--omx-inverse-300);
+    --text-muted: var(--omx-inverse-500);
+    --text-faint: var(--omx-inverse-600);
+    --text-on-contrast: var(--omx-neutral-900);
+
+    --border-strong: var(--omx-inverse-500);
+    --border-default: #2b2b2b;
+    --border-subtle: #1f1f1f;
+
+    --interactive-primary: var(--omx-accent-on-dark);
+    --interactive-hover: #8ba5ff;
+    --interactive-active: var(--omx-accent);
+    --accent: var(--omx-accent-on-dark);
+    --accent-wash: var(--omx-accent-wash-on-dark);
+    --accent-wash-strong: rgba(107, 140, 255, 0.24);
+    --focus-ring: var(--omx-accent-on-dark);
+
+    /* The solid action inverts: a light button on a dark page. */
+    --action-solid-bg: var(--omx-inverse-100);
+    --action-solid-bg-hover: var(--omx-accent-on-dark);
+    --action-solid-text: var(--omx-neutral-900);
+
+    --domain-di: var(--omx-domain-di-on-dark);
+    --domain-fm: var(--omx-domain-fm-on-dark);
+    --domain-am: var(--omx-domain-am-on-dark);
+    --domain-se: var(--omx-domain-se-on-dark);
+
+    --status-proposed: var(--omx-status-proposed-on-dark);
+    --status-experimental: var(--omx-status-experimental-on-dark);
+    --status-active: var(--omx-status-active-on-dark);
+    --status-validating: var(--omx-status-validating-on-dark);
+    --status-published: var(--omx-status-published-on-dark);
+    --status-paused: var(--omx-status-paused-on-dark);
+    --status-archived: var(--omx-status-archived-on-dark);
+
+    --critical: var(--omx-critical-on-dark);
+    --critical-wash: rgba(255, 138, 128, 0.1);
+
+    --header-scrolled-bg: rgba(13, 13, 13, 0.93);
+    --header-scrolled-bg-opaque: #0d0d0d;
+  }
+
+  /* Regions that were already dark by intent go deeper, so the descent into
+     systems and runtime still reads as a change of depth. */
+  [data-tone="dark"] {
+    --surface-page: #000000;
+    --surface-subtle: #0a0a0a;
+    --surface-sunken: #000000;
+    --surface-raised: #121212;
+
+    --border-default: #242424;
+    --border-subtle: #171717;
+
+    --header-scrolled-bg: rgba(0, 0, 0, 0.93);
+    --header-scrolled-bg-opaque: #000000;
+  }
+}
+
+/**
+ * Forced-colors / Windows High Contrast.
+ * Stage 4 §96 requires high-contrast support. We surrender our palette to the
+ * user's system colors rather than fighting it, and keep structure legible.
+ */
+@media (forced-colors: active) {
+  :root,
+  [data-tone="light"],
+  [data-tone="dark"] {
+    --surface-page: Canvas;
+    --surface-subtle: Canvas;
+    --surface-raised: Canvas;
+    --text-primary: CanvasText;
+    --text-secondary: CanvasText;
+    --text-muted: CanvasText;
+    --text-faint: GrayText;
+    --border-default: CanvasText;
+    --border-subtle: GrayText;
+    --border-strong: CanvasText;
+    --accent: LinkText;
+    --interactive-primary: LinkText;
+    --focus-ring: Highlight;
+  }
+}

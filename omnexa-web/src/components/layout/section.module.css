@@ -1,0 +1,38 @@
+.section {
+  position: relative;
+  background-color: var(--surface-page);
+  color: var(--text-primary);
+  /* Tone changes are part of the research→runtime descent, so they ease
+     rather than snap. Collapses to instant under reduced motion. */
+  transition:
+    background-color var(--omx-transition-section),
+    color var(--omx-transition-section);
+}
+
+.section[data-surface="subtle"] {
+  background-color: var(--surface-subtle);
+}
+
+.inner {
+  width: 100%;
+  max-width: var(--omx-content-max);
+  margin-inline: auto;
+  padding-inline: var(--omx-page-margin);
+}
+
+/* Density: Stage 1 §31 */
+.monumental {
+  padding-block: var(--omx-section-monumental);
+}
+
+.editorial {
+  padding-block: var(--omx-section-editorial);
+}
+
+.instrumental {
+  padding-block: var(--omx-section-instrumental);
+}
+
+.compact {
+  padding-block: var(--omx-section-compact);
+}

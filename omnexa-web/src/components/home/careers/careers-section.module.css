@@ -1,0 +1,169 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-12);
+}
+
+.headerMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--omx-space-4);
+}
+
+.rule {
+  flex: 1 1 auto;
+  height: 0;
+  border-top: var(--omx-rule-width) solid var(--border-default);
+}
+
+.headerBody {
+  display: grid;
+  gap: var(--omx-space-10);
+}
+
+@media (min-width: 1024px) {
+  .headerBody {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--omx-grid-gutter);
+    align-items: end;
+  }
+
+  .headerBody > :first-child {
+    grid-column: 1 / span 6;
+  }
+
+  .headerAside {
+    grid-column: 8 / span 5;
+    padding-bottom: var(--omx-space-2);
+  }
+}
+
+.headerAside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-8);
+  color: var(--text-secondary);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-4);
+  align-items: stretch;
+}
+
+@media (min-width: 480px) {
+  .actions {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--omx-space-8);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Paths
+ *
+ * TileGrid owns the grid and the gutter. This class must contribute spacing
+ * ONLY: it is passed through as a className, so re-declaring `display: grid`
+ * and `gap: 0` here would override the grid it is layered onto and collapse
+ * the gaps between tiles.
+ * ------------------------------------------------------------------------ */
+.paths {
+  margin-top: var(--omx-space-16);
+}
+
+/* ---------------------------------------------------------------------------
+ * Open roles
+ * ------------------------------------------------------------------------ */
+.roles {
+  margin-top: var(--omx-space-16);
+}
+
+.rolesTitle {
+  padding-bottom: var(--omx-space-4);
+  border-bottom: var(--omx-rule-width) solid var(--border-default);
+}
+
+.roleList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.role {
+  border-bottom: var(--omx-rule-width) solid var(--border-subtle);
+}
+
+.roleLink {
+  display: grid;
+  gap: var(--omx-space-3);
+  padding-block: var(--omx-space-5);
+  align-items: baseline;
+}
+
+@media (min-width: 768px) {
+  .roleLink {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: var(--omx-space-8);
+  }
+}
+
+.roleTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--omx-space-3);
+  flex-wrap: wrap;
+  font-family: var(--omx-font-display);
+  font-size: var(--omx-font-h4);
+  font-weight: var(--omx-weight-medium);
+  color: var(--text-primary);
+  transition: color var(--omx-transition-fast);
+}
+
+.roleLink:hover .roleTitle {
+  color: var(--interactive-primary);
+}
+
+.roleMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--omx-space-5);
+  color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------------------------
+ * Empty state
+ * ------------------------------------------------------------------------ */
+.empty {
+  padding-top: var(--omx-space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-3);
+  border-left: 2px solid var(--border-default);
+  padding-left: var(--omx-space-6);
+  margin-top: var(--omx-space-8);
+}
+
+.emptyLead {
+  color: var(--text-primary);
+}
+
+.emptyDetail {
+  color: var(--text-muted);
+}
+
+/* Still used by the open-roles list below, which is a row list rather than a
+   tile grid and therefore keeps its own arrow. */
+.pathArrow {
+  font-family: var(--omx-font-mono);
+  color: var(--text-muted);
+  transition:
+    transform var(--omx-transition-fast),
+    color var(--omx-transition-fast);
+}
+
+.roleLink:hover .pathArrow,
+.roleLink:focus-visible .pathArrow {
+  transform: translateX(0.25em);
+  color: var(--interactive-primary);
+}

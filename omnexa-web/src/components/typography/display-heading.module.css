@@ -1,0 +1,24 @@
+.heading {
+  /* Not `text-wrap: balance`: these lines are authored, not reflowed. */
+  text-wrap: nowrap;
+}
+
+.line {
+  display: block;
+}
+
+.terminal {
+  color: var(--accent);
+}
+
+/* Below `sm`, a long authored line may still exceed the viewport. Allow it to
+   wrap rather than force a horizontal scrollbar on the page. */
+@media (max-width: 479px) {
+  .heading {
+    text-wrap: pretty;
+  }
+
+  .line {
+    hyphens: auto;
+  }
+}

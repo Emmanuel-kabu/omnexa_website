@@ -1,0 +1,114 @@
+.graph {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+.orbit {
+  fill: none;
+  stroke: var(--border-default);
+  stroke-width: 1;
+  stroke-dasharray: 2 6;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.6;
+}
+
+/* ---------------------------------------------------------------------------
+ * Edges
+ * ------------------------------------------------------------------------ */
+.edge {
+  stroke: var(--text-primary);
+  stroke-opacity: 0.28;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  transition:
+    stroke-opacity var(--omx-transition-ui),
+    stroke var(--omx-transition-ui);
+}
+
+.edge[data-active] {
+  stroke: var(--node-color, var(--accent));
+  stroke-opacity: 0.9;
+}
+
+.edge[data-dimmed] {
+  stroke-opacity: 0.08;
+}
+
+/* ---------------------------------------------------------------------------
+ * Nodes
+ * ------------------------------------------------------------------------ */
+.node {
+  cursor: default;
+}
+
+.node[data-type="area"],
+.node[data-type="subdomain"],
+.node[data-type="program"] {
+  cursor: pointer;
+}
+
+.hit {
+  fill: transparent;
+}
+
+.dot {
+  fill: var(--text-primary);
+  opacity: 0.5;
+  /* Position transitions are what makes selection feel causal rather than
+     abrupt, and collapse to instant under reduced motion. */
+  transition:
+    cx var(--omx-motion-section) var(--omx-ease-out),
+    cy var(--omx-motion-section) var(--omx-ease-out),
+    fill var(--omx-transition-ui),
+    opacity var(--omx-transition-ui),
+    r var(--omx-transition-ui);
+}
+
+.node[data-type="root"] .dot {
+  fill: var(--text-primary);
+  opacity: 1;
+}
+
+.node[data-type="area"] .dot {
+  fill: var(--node-color, var(--accent));
+  opacity: 0.85;
+}
+
+.node[data-active] .dot {
+  fill: var(--node-color, var(--accent));
+  opacity: 1;
+}
+
+.node[data-dimmed] .dot {
+  opacity: 0.18;
+}
+
+.node:hover .dot {
+  opacity: 1;
+}
+
+/* ---------------------------------------------------------------------------
+ * Labels
+ * ------------------------------------------------------------------------ */
+.label {
+  font-family: var(--omx-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  fill: var(--text-secondary);
+  pointer-events: none;
+  transition:
+    fill var(--omx-transition-ui),
+    opacity var(--omx-transition-ui);
+}
+
+.node[data-active] .label {
+  fill: var(--text-primary);
+}
+
+/* Dimmed context must recede without becoming unreadable: a visitor should
+   still be able to identify the other three areas at a glance. */
+.node[data-dimmed] .label {
+  opacity: 0.55;
+}

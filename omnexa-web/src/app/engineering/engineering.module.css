@@ -1,0 +1,123 @@
+.thesis {
+  display: grid;
+  gap: var(--omx-space-10);
+}
+
+@media (min-width: 1024px) {
+  .thesis {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--omx-grid-gutter);
+    align-items: start;
+  }
+
+  .thesis > :first-child {
+    grid-column: 1 / span 6;
+  }
+
+  .thesisBody {
+    grid-column: 8 / span 5;
+  }
+}
+
+.thesisBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-6);
+  color: var(--text-secondary);
+}
+
+.thesisSupport {
+  color: var(--text-primary);
+  border-left: 2px solid var(--accent);
+  padding-left: var(--omx-space-6);
+}
+
+/* ---------------------------------------------------------------------------
+ * Disciplines
+ * ------------------------------------------------------------------------ */
+
+@media (min-width: 768px) {
+}
+
+.subdomains {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text-secondary);
+  border-top: var(--omx-rule-width) solid var(--border-subtle);
+}
+
+.subdomains li {
+  padding-block: var(--omx-space-3);
+  border-bottom: var(--omx-rule-width) solid var(--border-subtle);
+}
+
+/* ---------------------------------------------------------------------------
+ * Principles
+ * ------------------------------------------------------------------------ */
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 1024px) {
+}
+
+/* ---------------------------------------------------------------------------
+ * Working practice: the one dark band on the page, so the engineering
+ * commitments read as a deliberate statement rather than another list.
+ * ------------------------------------------------------------------------ */
+.practice {
+  display: grid;
+  gap: var(--omx-space-8);
+}
+
+@media (min-width: 1024px) {
+  .practice {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--omx-grid-gutter);
+    align-items: start;
+  }
+
+  .practice > :first-child {
+    grid-column: 1 / span 3;
+  }
+
+  .practiceList {
+    grid-column: 5 / span 8;
+  }
+}
+
+.practiceList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: var(--omx-rule-width) solid var(--border-default);
+}
+
+.practiceList li {
+  color: var(--text-primary);
+  padding-block: var(--omx-space-4);
+  border-bottom: var(--omx-rule-width) solid var(--border-subtle);
+}
+
+/* ---------------------------------------------------------------------------
+ * Honest status notice
+ * ------------------------------------------------------------------------ */
+.notice {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-3);
+  border-left: 2px solid var(--border-default);
+  padding-left: var(--omx-space-6);
+  max-width: var(--omx-measure-prose);
+}
+
+.noticeDetail {
+  color: var(--text-muted);
+}

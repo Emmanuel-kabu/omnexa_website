@@ -1,0 +1,11 @@
+.year {
+  margin-bottom: var(--omx-space-16);
+}
+
+.year:last-child {
+  margin-bottom: 0;
+}
+
+.yearLabel {
+  padding-bottom: var(--omx-space-4);
+}

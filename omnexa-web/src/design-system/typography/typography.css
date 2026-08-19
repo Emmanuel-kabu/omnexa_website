@@ -1,0 +1,167 @@
+/**
+ * Omnexa Labs: Typography runtime
+ * Stage 7 §11, Stage 1 §8-9
+ *
+ * Explicit named styles. Nothing in the site relies on browser-default
+ * typography for buttons, forms, filters, menus, search, code controls or
+ * publication metadata (Stage 7 §11).
+ *
+ * These are global classes because typography is cross-cutting; components
+ * apply them by name or compose them from CSS Modules. Heading LEVEL stays
+ * independent of visual size, so `<h2 class="omx-display-2">` is legal and
+ * heading order remains semantic (Stage 2 §81).
+ */
+
+/* ---------------------------------------------------------------------------
+ * Display: monumental statements
+ * ------------------------------------------------------------------------ */
+.omx-display-1,
+.omx-display-2 {
+  font-family: var(--omx-font-display);
+  font-weight: var(--omx-weight-medium);
+  line-height: var(--omx-leading-display);
+  letter-spacing: var(--omx-tracking-display);
+  text-wrap: balance;
+}
+
+.omx-display-1 {
+  font-size: var(--omx-font-display-1);
+  letter-spacing: var(--omx-tracking-display-tight);
+}
+
+.omx-display-2 {
+  font-size: var(--omx-font-display-2);
+}
+
+/* ---------------------------------------------------------------------------
+ * Headings
+ * ------------------------------------------------------------------------ */
+.omx-heading-1,
+.omx-heading-2,
+.omx-heading-3,
+.omx-heading-4 {
+  font-family: var(--omx-font-display);
+  font-weight: var(--omx-weight-medium);
+  letter-spacing: var(--omx-tracking-heading);
+  text-wrap: balance;
+}
+
+.omx-heading-1 {
+  font-size: var(--omx-font-h1);
+  line-height: var(--omx-leading-tight);
+  letter-spacing: var(--omx-tracking-display);
+}
+
+.omx-heading-2 {
+  font-size: var(--omx-font-h2);
+  line-height: var(--omx-leading-tight);
+}
+
+.omx-heading-3 {
+  font-size: var(--omx-font-h3);
+  line-height: var(--omx-leading-snug);
+}
+
+.omx-heading-4 {
+  font-size: var(--omx-font-h4);
+  line-height: var(--omx-leading-snug);
+  font-weight: var(--omx-weight-semibold);
+}
+
+/* ---------------------------------------------------------------------------
+ * Body
+ * ------------------------------------------------------------------------ */
+.omx-body-lg {
+  font-size: var(--omx-font-body-lg);
+  line-height: var(--omx-leading-relaxed);
+  letter-spacing: -0.011em;
+  text-wrap: pretty;
+}
+
+.omx-body {
+  font-size: var(--omx-font-body);
+  line-height: var(--omx-leading-relaxed);
+  text-wrap: pretty;
+}
+
+.omx-body-sm {
+  font-size: var(--omx-font-body-sm);
+  line-height: var(--omx-leading-normal);
+}
+
+.omx-caption {
+  font-size: var(--omx-font-body-sm);
+  line-height: var(--omx-leading-normal);
+  color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------------------------
+ * Technical metadata: Stage 1 §8.3, §9
+ * Monospace should stay at roughly 5-10% of visible typography.
+ * ------------------------------------------------------------------------ */
+.omx-technical {
+  font-family: var(--omx-font-mono);
+  font-size: var(--omx-font-meta);
+  font-weight: var(--omx-weight-regular);
+  line-height: var(--omx-leading-snug);
+  letter-spacing: var(--omx-tracking-meta);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.omx-technical-sm {
+  font-family: var(--omx-font-mono);
+  font-size: var(--omx-font-meta-sm);
+  line-height: var(--omx-leading-snug);
+  letter-spacing: var(--omx-tracking-meta-wide);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Research identifiers keep their case and stay unambiguous */
+.omx-identifier {
+  font-family: var(--omx-font-mono);
+  font-size: var(--omx-font-meta);
+  letter-spacing: var(--omx-tracking-wide);
+  font-variant-numeric: tabular-nums;
+  text-transform: none;
+}
+
+/* ---------------------------------------------------------------------------
+ * Interface
+ * ------------------------------------------------------------------------ */
+.omx-navigation {
+  font-family: var(--omx-font-sans);
+  font-size: var(--omx-font-body-sm);
+  font-weight: var(--omx-weight-medium);
+  line-height: var(--omx-leading-snug);
+  letter-spacing: -0.005em;
+}
+
+.omx-control {
+  font-family: var(--omx-font-sans);
+  font-size: var(--omx-font-body-sm);
+  font-weight: var(--omx-weight-medium);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+/* ---------------------------------------------------------------------------
+ * Numerical identity: Stage 1 §26
+ * ------------------------------------------------------------------------ */
+.omx-numeral-lg,
+.omx-numeral {
+  font-family: var(--omx-font-display);
+  font-weight: var(--omx-weight-regular);
+  line-height: 0.9;
+  letter-spacing: var(--omx-tracking-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.omx-numeral-lg {
+  font-size: var(--omx-font-numeral-lg);
+}
+
+.omx-numeral {
+  font-size: var(--omx-font-numeral);
+}

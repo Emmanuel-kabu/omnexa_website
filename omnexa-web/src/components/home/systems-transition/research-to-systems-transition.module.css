@@ -1,0 +1,129 @@
+.section {
+  position: relative;
+  background-color: var(--surface-page);
+  color: var(--text-primary);
+  padding-block: var(--omx-section-monumental);
+  overflow: hidden;
+
+  /* The handover from the light surface above. A short gradient band rather
+     than a hard edge, so the descent reads as a transition (Stage 1 §7). */
+  border-top: var(--omx-rule-width) solid var(--border-default);
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 12rem;
+  background: linear-gradient(
+    to bottom,
+    var(--omx-bg-primary) 0%,
+    transparent 100%
+  );
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  width: 100%;
+  max-width: var(--omx-content-max);
+  margin-inline: auto;
+  padding-inline: var(--omx-page-margin);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-16);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-8);
+}
+
+.body {
+  display: grid;
+  gap: var(--omx-space-12);
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .body {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--omx-grid-gutter);
+  }
+
+  .visual {
+    grid-column: 1 / span 7;
+  }
+
+  .lede {
+    grid-column: 9 / span 4;
+  }
+}
+
+.visual {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.lede {
+  color: var(--text-secondary);
+  max-width: var(--omx-measure-lede);
+}
+
+/* ---------------------------------------------------------------------------
+ * Visual marks
+ * ------------------------------------------------------------------------ */
+.path,
+.pathAccent {
+  fill: none;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.path {
+  stroke: var(--text-primary);
+  stroke-opacity: 0.25;
+}
+
+.pathAccent {
+  stroke: var(--accent);
+  stroke-opacity: 0.7;
+}
+
+.lane,
+.laneAccent {
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.lane {
+  stroke: var(--text-primary);
+  stroke-opacity: 0.4;
+}
+
+.laneAccent {
+  stroke: var(--accent);
+  stroke-opacity: 0.9;
+}
+
+.boundary {
+  stroke: var(--text-primary);
+  stroke-opacity: 0.15;
+  stroke-width: 1;
+  stroke-dasharray: 2 6;
+  vector-effect: non-scaling-stroke;
+}
+
+.node {
+  fill: var(--text-primary);
+  opacity: 0.6;
+}
+
+.nodeAccent {
+  fill: var(--accent);
+}

@@ -1,0 +1,55 @@
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.edges line {
+  stroke: var(--text-primary);
+  stroke-width: 0.75;
+  vector-effect: non-scaling-stroke;
+}
+
+.edgeSignal {
+  stroke: var(--accent) !important;
+}
+
+.nodes circle {
+  fill: var(--text-primary);
+  opacity: 0.55;
+}
+
+.nodeAccent {
+  fill: var(--accent) !important;
+  opacity: 0.9 !important;
+}
+
+/* Both layers must fill the field region: the Canvas runtime measures its own
+   parent element to size the drawing surface, so a zero-height wrapper would
+   silently produce a blank canvas. */
+.layer {
+  position: absolute;
+  inset: 0;
+}
+
+/* The enhanced layer fades in over the static one rather than replacing it
+   abruptly, so there is never a blank frame (Stage 3 §50). */
+.enhanced {
+  opacity: 0;
+  transition: opacity var(--omx-motion-cinematic) var(--omx-ease-out);
+}
+
+.enhanced[data-ready] {
+  opacity: 1;
+}
+
+/* Once the Canvas is painting, the SVG underneath is redundant. Kept in the
+   DOM (so a runtime failure can fall straight back to it) but hidden from
+   view to avoid double-drawing. */
+.staticHidden {
+  opacity: 0;
+  transition: opacity var(--omx-motion-cinematic) var(--omx-ease-out);
+}

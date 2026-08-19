@@ -1,0 +1,46 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-12);
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--omx-space-4);
+}
+
+.rule {
+  flex: 1 1 auto;
+  height: 0;
+  border-top: var(--omx-rule-width) solid var(--border-default);
+}
+
+.body {
+  display: grid;
+  gap: var(--omx-space-8);
+}
+
+/* Asymmetric: heading occupies the left seven columns, supporting copy sits
+   in the right five and starts lower: Stage 1 §10.2 */
+@media (min-width: 1024px) {
+  .body {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--omx-grid-gutter);
+    align-items: end;
+  }
+
+  .heading {
+    grid-column: 1 / span 7;
+  }
+
+  .aside {
+    grid-column: 8 / span 5;
+    padding-bottom: var(--omx-space-3);
+  }
+}
+
+.lede {
+  color: var(--text-secondary);
+  max-width: var(--omx-measure-lede);
+}

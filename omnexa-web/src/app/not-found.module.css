@@ -1,0 +1,46 @@
+.page {
+  position: relative;
+  isolation: isolate;
+  min-height: 80svh;
+  display: flex;
+  align-items: center;
+  background-color: var(--surface-page);
+  color: var(--text-primary);
+  overflow: hidden;
+  padding-block: var(--omx-section-monumental);
+}
+
+.field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.35;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse 70% 70% at 60% 50%, black 20%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 60% 50%, black 20%, transparent 100%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--omx-content-max);
+  margin-inline: auto;
+  padding-inline: var(--omx-page-margin);
+  padding-top: var(--omx-header-height);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-8);
+}
+
+.lede {
+  color: var(--text-secondary);
+  max-width: 34ch;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--omx-space-8);
+}

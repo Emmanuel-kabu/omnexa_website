@@ -1,0 +1,161 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+
+  /* Stage 3 §7: `svh` so mobile browser chrome doesn't crop the composition.
+     The `vh` line is the fallback for engines without `svh`. */
+  min-height: 100vh;
+  min-height: 96svh;
+
+  display: flex;
+  flex-direction: column;
+  /*
+   * Centred, not bottom-pinned. `flex-end` pushed the headline into the lower
+   * third of a 96svh container, so on a 1080p display the first thing a
+   * visitor read sat below the midpoint with a screen of empty canvas above
+   * it. The composition still breathes; it just no longer starts late.
+   */
+  justify-content: center;
+
+  background-color: var(--surface-page);
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+ * The field.
+ *
+ * Mobile: sits above the copy as its own band, so it reads as a distinct
+ * element in an art-directed stack rather than a texture behind text
+ * (Stage 3 §9).
+ * Desktop: occupies the right portion of the composition, beside the headline.
+ * ------------------------------------------------------------------------ */
+.field {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+
+  inset-inline: 0;
+  top: calc(var(--omx-header-height) + var(--omx-space-8));
+  height: 38svh;
+
+  opacity: 0.7;
+  mask-image: radial-gradient(
+    ellipse 70% 70% at 50% 45%,
+    black 40%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 70% 70% at 50% 45%,
+    black 40%,
+    transparent 100%
+  );
+}
+
+@media (min-width: 768px) {
+  .field {
+    inset-block: 0;
+    left: 38%;
+    right: calc(var(--omx-page-margin) * -1);
+    height: auto;
+    opacity: 0.85;
+    mask-image: radial-gradient(
+      ellipse 65% 65% at 45% 50%,
+      black 35%,
+      transparent 100%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 65% 65% at 45% 50%,
+      black 35%,
+      transparent 100%
+    );
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Copy
+ * ------------------------------------------------------------------------ */
+.inner {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: var(--omx-content-max);
+  margin-inline: auto;
+  padding-inline: var(--omx-page-margin);
+
+  /* Mobile: clears the field band above. Desktop: the field sits beside. */
+  padding-top: calc(38svh + var(--omx-header-height) + var(--omx-space-12));
+  padding-bottom: var(--omx-space-16);
+}
+
+@media (min-width: 768px) {
+  .inner {
+    /* Only enough top padding to clear the fixed header; centring does the
+       rest, so the block sits optically just above the middle. */
+    padding-top: var(--omx-header-height);
+    padding-bottom: var(--omx-space-12);
+  }
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-10);
+}
+
+@media (min-width: 768px) {
+  .copy {
+    max-width: 62ch;
+  }
+}
+
+.headline {
+  color: var(--text-primary);
+}
+
+.lede {
+  color: var(--text-secondary);
+  max-width: 34ch;
+}
+
+@media (min-width: 768px) {
+  .lede {
+    max-width: 40ch;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-4);
+  align-items: stretch;
+}
+
+@media (min-width: 480px) {
+  .actions {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--omx-space-6);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * The closing metadata rule: Stage 1 §37
+ * ------------------------------------------------------------------------ */
+.footerLine {
+  position: relative;
+  z-index: 1;
+  border-top: var(--omx-rule-width) solid var(--border-default);
+}
+
+.footerInner {
+  width: 100%;
+  max-width: var(--omx-content-max);
+  margin-inline: auto;
+  padding: var(--omx-space-4) var(--omx-page-margin);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--omx-space-6);
+}

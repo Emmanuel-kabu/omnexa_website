@@ -1,0 +1,31 @@
+# Dependencies and build output live inside the app directory.
+node_modules/
+.next/
+out/
+build/
+coverage/
+
+# Audit artefacts produced by scripts/ and CI
+lh.json
+*.tsbuildinfo
+
+# Environment. Nothing here is committed; see omnexa-web/src/lib/site.ts for the
+# variables the app reads (NEXT_PUBLIC_SITE_URL, NEXT_PUBLIC_CONTACT_EMAIL,
+# NEXT_PUBLIC_PUBLISH_SYSTEMS, NEXT_PUBLIC_INCLUDE_SAMPLE_CONTENT).
+.env
+.env.*
+!.env.example
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+*.pem
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Vercel
+.vercel

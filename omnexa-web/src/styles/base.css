@@ -1,0 +1,121 @@
+/**
+ * Omnexa Labs: Base element styles
+ * Stage 1 §32, Stage 3 §35, §39
+ */
+
+html {
+  /* Smooth scroll only for users who haven't asked us to stop moving things */
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--surface-page);
+  color: var(--text-primary);
+  font-family: var(--omx-font-sans);
+  font-size: var(--omx-font-body);
+  font-weight: var(--omx-weight-regular);
+  line-height: var(--omx-leading-normal);
+  letter-spacing: var(--omx-tracking-normal);
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  min-height: 100svh;
+
+  /* The page must never scroll horizontally, whatever a visualization does */
+  overflow-x: hidden;
+}
+
+/* Tabular figures wherever numbers carry meaning: research IDs, counts,
+   metrics, dates, so columns align and digits don't jitter on update. */
+[data-numeric],
+time,
+code,
+kbd,
+samp,
+pre {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------------------------------------------------------------------------
+ * Focus: Stage 3 §39. Never remove native focus without replacement.
+ * `:focus-visible` keeps the ring off mouse clicks but always on for keyboard.
+ * ------------------------------------------------------------------------ */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: var(--omx-radius-xs);
+}
+
+/* ---------------------------------------------------------------------------
+ * Selection
+ * ------------------------------------------------------------------------ */
+::selection {
+  background-color: var(--accent-wash-strong);
+  color: var(--text-primary);
+}
+
+/* ---------------------------------------------------------------------------
+ * Links in editorial prose
+ * ------------------------------------------------------------------------ */
+.prose a,
+a[data-underline] {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--border-strong);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color var(--omx-transition-fast);
+}
+
+.prose a:hover,
+a[data-underline]:hover {
+  text-decoration-color: var(--interactive-primary);
+}
+
+/* ---------------------------------------------------------------------------
+ * Code
+ * ------------------------------------------------------------------------ */
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--omx-font-mono);
+  font-size: 0.9em;
+}
+
+/* ---------------------------------------------------------------------------
+ * Reduced motion: Stage 1 §32.1, Stage 3 §35
+ *
+ * Collapse every duration token to ~0 rather than disabling transitions
+ * wholesale. Elements still arrive at their final state, so any component
+ * animating *to* a visible state can't get stranded mid-transition and
+ * disappear. Information is preserved; only movement is removed.
+ * ------------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  :root {
+    --omx-motion-instant: 1ms;
+    --omx-motion-fast: 1ms;
+    --omx-motion-ui: 1ms;
+    --omx-motion-section: 1ms;
+    --omx-motion-cinematic: 1ms;
+    --omx-stagger: 0ms;
+  }
+}

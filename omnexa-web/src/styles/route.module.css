@@ -1,0 +1,169 @@
+/**
+ * Shared route layout.
+ *
+ * Index and detail pages across Research, Systems, Insights, Company and
+ * Careers share the same structural vocabulary, so it lives in one module
+ * rather than being re-declared per route.
+ */
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-12);
+}
+
+.stackTight {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-6);
+}
+
+.sectionTitle {
+  padding-bottom: var(--omx-space-8);
+}
+
+/* Long-form technical reading measure: Stage 4 §73 */
+.prose {
+  max-width: var(--omx-measure-prose);
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-5);
+  color: var(--text-secondary);
+}
+
+.prose h2,
+.prose h3 {
+  color: var(--text-primary);
+}
+
+/* Two-column reading layout: content left, metadata right */
+.reading {
+  display: grid;
+  gap: var(--omx-space-12);
+}
+
+@media (min-width: 1024px) {
+  .reading {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--omx-grid-gutter);
+    align-items: start;
+  }
+
+  .readingMain {
+    grid-column: 1 / span 7;
+  }
+
+  .readingAside {
+    grid-column: 9 / span 4;
+    position: sticky;
+    top: calc(var(--omx-header-height) + var(--omx-space-8));
+  }
+}
+
+.readingMain {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-12);
+}
+
+.readingAside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-8);
+}
+
+/* A labelled block of technical metadata */
+.metaBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: var(--omx-rule-width) solid var(--border-default);
+}
+
+.metaItem {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--omx-space-4);
+  padding-block: var(--omx-space-3);
+  border-bottom: var(--omx-rule-width) solid var(--border-subtle);
+}
+
+.metaValue {
+  color: var(--text-primary);
+  text-align: right;
+}
+
+/* A titled content block within a detail page */
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-5);
+  border-top: var(--omx-rule-width) solid var(--border-default);
+  padding-top: var(--omx-space-6);
+}
+
+.blockTitle {
+  color: var(--text-primary);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text-secondary);
+}
+
+/* Directory links, not prose: they need a 24px target (WCAG 2.2 SC 2.5.8). */
+.list a {
+  display: inline-block;
+  min-height: 24px;
+}
+
+.listItem {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--omx-space-4);
+  align-items: baseline;
+}
+
+/**
+ * A bulleted item whose marker is a short accent rule drawn in CSS.
+ * Keeping the marker out of the text means assistive technology announces the
+ * content only, and the marker stays consistent with the structural line
+ * language of Stage 1 §12.
+ */
+.bulletItem {
+  position: relative;
+  padding-left: var(--omx-space-8);
+}
+
+.bulletItem::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: var(--omx-space-4);
+  height: 0;
+  border-top: 1px solid var(--accent);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--omx-space-8);
+}
+
+.grid2 {
+  display: grid;
+  gap: var(--omx-space-10) var(--omx-grid-gutter);
+}
+
+@media (min-width: 768px) {
+  .grid2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

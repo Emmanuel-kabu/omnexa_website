@@ -1,0 +1,16 @@
+.id {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.primary {
+  color: var(--text-primary);
+}
+
+.accent {
+  color: var(--accent);
+}

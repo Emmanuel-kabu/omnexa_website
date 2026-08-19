@@ -1,0 +1,91 @@
+.visual {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+/* ---------------------------------------------------------------------------
+ * Labels: monospace metadata, consistent with the Stage 1 §8.3 treatment
+ * ------------------------------------------------------------------------ */
+.label,
+.labelSm,
+.labelSmCenter,
+.labelAccent {
+  font-family: var(--omx-font-mono);
+  letter-spacing: var(--omx-tracking-meta);
+  fill: var(--text-muted);
+}
+
+.label {
+  font-size: 11px;
+  text-anchor: middle;
+}
+
+.labelSm {
+  font-size: 9px;
+  text-anchor: start;
+}
+
+/* Used where the mark sits directly above or below its anchor point */
+.labelSmCenter {
+  font-size: 9px;
+  text-anchor: middle;
+}
+
+.labelAccent {
+  font-size: 9px;
+  text-anchor: middle;
+  fill: var(--accent);
+}
+
+/* ---------------------------------------------------------------------------
+ * Marks
+ * ------------------------------------------------------------------------ */
+.line,
+.lineFaint,
+.lineDashed,
+.pathAccent {
+  fill: none;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.line {
+  stroke: var(--text-primary);
+  stroke-opacity: 0.4;
+}
+
+.lineFaint {
+  stroke: var(--text-primary);
+  stroke-opacity: 0.2;
+}
+
+.lineDashed {
+  stroke: var(--text-primary);
+  stroke-opacity: 0.2;
+  stroke-dasharray: 2 5;
+}
+
+.pathAccent {
+  stroke: var(--accent);
+  stroke-opacity: 0.75;
+}
+
+.ring {
+  fill: none;
+  stroke: var(--text-primary);
+  stroke-opacity: 0.14;
+  stroke-width: 1;
+  stroke-dasharray: 3 5;
+  vector-effect: non-scaling-stroke;
+}
+
+.node {
+  fill: var(--text-primary);
+  opacity: 0.6;
+}
+
+.nodeAccent {
+  fill: var(--accent);
+}

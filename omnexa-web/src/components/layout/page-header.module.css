@@ -1,0 +1,44 @@
+.header {
+  background-color: var(--surface-page);
+  color: var(--text-primary);
+  /* Clears the fixed header, then opens up the composition */
+  padding-top: calc(var(--omx-header-height) + var(--omx-space-16));
+  padding-bottom: var(--omx-section-editorial);
+  border-bottom: var(--omx-rule-width) solid var(--border-default);
+}
+
+.inner {
+  width: 100%;
+  max-width: var(--omx-content-max);
+  margin-inline: auto;
+  padding-inline: var(--omx-page-margin);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--omx-space-8);
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--omx-space-4);
+}
+
+.rule {
+  flex: 1 1 auto;
+  height: 0;
+  border-top: var(--omx-rule-width) solid var(--border-default);
+}
+
+.lede {
+  color: var(--text-secondary);
+  max-width: var(--omx-measure-prose);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--omx-space-6) var(--omx-space-10);
+  border-top: var(--omx-rule-width) solid var(--border-subtle);
+  padding-top: var(--omx-space-5);
+}

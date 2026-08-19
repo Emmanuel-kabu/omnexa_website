@@ -1,0 +1,27 @@
+/**
+ * Omnexa Labs: Global stylesheet composition root
+ *
+ * Import order is load-bearing:
+ *   1. reset     : strip browser defaults
+ *   2. tokens    : raw primitives
+ *   3. themes    : semantic mapping over the primitives (tone-aware)
+ *   4. typography: named type styles built on tokens
+ *   5. base      : element defaults built on semantic tokens
+ *   6. utilities : cross-cutting helpers
+ */
+
+@import "../styles/reset.css";
+
+@import "../design-system/tokens/color.css";
+@import "../design-system/tokens/typography.css";
+@import "../design-system/tokens/spacing.css";
+@import "../design-system/tokens/radius.css";
+@import "../design-system/tokens/motion.css";
+@import "../design-system/tokens/layout.css";
+@import "../design-system/tokens/z-index.css";
+
+@import "../design-system/themes/semantic.css";
+@import "../design-system/typography/typography.css";
+
+@import "../styles/base.css";
+@import "../styles/utilities.css";
