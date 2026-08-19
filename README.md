@@ -38,8 +38,22 @@ dev-mode timings and bundles are not representative. CI runs the same pipeline
 on every pull request.
 
 Current state: **0 axe violations** across 12 pages, **23 interaction checks
-passing**, Lighthouse accessibility / best-practices / SEO at 100. Performance
-is reported but not gated, because measured scores varied 74–87 run to run.
+passing**, **0 CSP violations** across 17 pages, and Lighthouse at **93 / 100 /
+100 / 100**.
+
+Performance is gated at 85. It was advisory for a long time because local scores
+swung 74–87, but that was a workstation artefact: two CI runs both scored 93 with
+LCP agreeing to within 0.2% (3164.5ms vs 3163.4ms) despite the runners differing
+about 6% in CPU benchmark. Trust CI numbers over local ones. The threshold sits
+well below the observed score deliberately, since two samples is a thin basis for
+a tight gate and TBT/TTI did move about 9% between runs.
+
+LCP, at 3.2s against a perfect 1.1s FCP, is the one weak metric. The largest
+element is the hero lede paragraph, so nothing heavy blocks it; the cost is
+render-blocking CSS (119 KB raw across 3 files) and framework JavaScript. Note
+that a `browserslist` narrowing was tried against the "legacy JavaScript"
+Lighthouse reports and produced a byte-identical bundle, because that code is in
+prebuilt framework packages Next does not retranspile.
 
 ## Configuration
 

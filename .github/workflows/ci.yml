@@ -80,17 +80,19 @@ jobs:
       - name: Security headers and CSP audit
         run: node scripts/csp-audit.mjs
 
-      # Reported, not gated: measured scores varied 74-87 run to run on an
-      # unloaded machine, so a hard threshold would be flaky rather than
-      # informative. Revisit once there is a stable baseline.
-      - name: Lighthouse (reported, not gated)
-        continue-on-error: true
+      # Gated at 85, no longer advisory. The 74-87 spread that justified
+      # continue-on-error was a workstation artefact: two CI runs both scored 93
+      # with LCP agreeing to within 0.2% (3164.5ms vs 3163.4ms) despite the
+      # runners differing ~6% in CPU benchmark. scripts/lighthouse-gate.mjs
+      # holds the threshold and the reasoning, and treats a crashed run with
+      # null scores as a failure rather than a pass.
+      - name: Lighthouse (performance gated at 85)
         run: |
           npx lighthouse http://localhost:3000/ \
             --output=json --output-path=./lh.json \
             --only-categories=performance,accessibility,best-practices,seo \
             --chrome-flags="--headless --no-sandbox --disable-gpu" --quiet
-          node -e "const r=require('./lh.json');for(const v of Object.values(r.categories))console.log(v.title.padEnd(16),Math.round(v.score*100));"
+          node scripts/lighthouse-gate.mjs ./lh.json
 
       # Uploaded on success and failure alike: when an audit fails on the runner
       # these two files are the only way to diagnose it from outside.
